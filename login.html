@@ -18,7 +18,7 @@
             --brand-hover: #4338ca;
             --border-color: #e2e8f0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
             --radius-lg: 16px;
             --radius-md: 10px;
         }
@@ -26,10 +26,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            /* Same subtle background overlay used on index, universities, and visa pages */
             background: linear-gradient(
-                rgba(248, 250, 252, 0.88), 
-                rgba(248, 250, 252, 0.88)
+                rgba(248, 250, 252, 0.35), 
+                rgba(248, 250, 252, 0.35)
             ), url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
@@ -44,8 +43,8 @@
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: 40px;
@@ -77,6 +76,7 @@
             font-size: 14px;
             outline: none;
             transition: border-color 0.2s ease;
+            background: #ffffff;
         }
         .form-group input:focus { border-color: var(--brand-primary); }
 
