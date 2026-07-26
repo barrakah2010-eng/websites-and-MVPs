@@ -15,8 +15,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background: linear-gradient(rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0.88)), 
-                        url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(
+                rgba(248, 250, 252, 0.35), 
+                rgba(248, 250, 252, 0.35)
+            ), url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
             background-size: cover; background-position: center; background-attachment: fixed;
             color: var(--text-primary); padding: 40px 24px; min-height: 100vh;
         }
@@ -26,17 +28,18 @@
         
         .header { margin-bottom: 32px; }
         .header h1 { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
-        .header p { color: var(--text-secondary); font-size: 16px; }
+        .header p { color: var(--text-secondary); font-size: 16px; font-weight: 600; }
 
         .blueprint-list { display: flex; flex-direction: column; gap: 20px; }
 
         .module-card {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
             border: 1px solid var(--border-color); border-radius: var(--radius-lg);
             padding: 28px; cursor: pointer; transition: all 0.2s ease;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
         }
 
-        .module-card:hover { border-color: var(--brand-primary); box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08); }
+        .module-card:hover { border-color: var(--brand-primary); }
 
         .module-header { display: flex; justify-content: space-between; align-items: center; }
         .module-title { font-size: 20px; font-weight: 800; }
@@ -61,7 +64,6 @@
         </div>
 
         <div class="blueprint-list">
-            <!-- Housing -->
             <div class="module-card" onclick="toggleModule('housing')">
                 <div class="module-header">
                     <div>
@@ -73,30 +75,25 @@
                 <div class="expand-body" id="body-housing">
                     <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" class="guide-img" alt="German Housing">
 Step-by-Step Housing Strategy:
-1. Student dormitories (Studierendenwerk): Apply the exact day you submit your university application. Spaces are assigned on a strict waitlist basis.
-2. Shared Apartments (Wohngemeinschaft / WG): Use WG-Gesucht.de. Craft a personalized profile in German outlining your lifestyle, clean habits, and funding.
-3. Temporary Stay: Book a temporary stay (Zwischenmiete or hostel) for your first 2-3 weeks to attend flat viewings in person.
-
-Crucial Legal Document — Wohnungsgeberbestätigung:
-In Germany, you cannot register your residence without a landlord confirmation certificate (Wohnungsgeberbestätigung). Ensure your landlord explicitly permits city registration (Anmeldung). Without it, you cannot obtain a tax ID or open a traditional bank account.
+1. Student dormitories (Studierendenwerk): Apply the exact day you submit your university application.
+2. Shared Apartments (WG): Use WG-Gesucht.de.
+3. Temporary Stay: Book a temporary stay for your first 2-3 weeks to attend flat viewings in person.
                 </div>
             </div>
 
-            <!-- Blocked Account -->
             <div class="module-card" onclick="toggleModule('blocked')">
                 <div class="module-header">
                     <div>
                         <div class="module-title">2. Blocked Account Setup (Sperrkonto)</div>
-                        <div class="module-subtitle">Official BaFin-compliant financial proof required for the German National Student Visa (Visum zu Studienzwecken).</div>
+                        <div class="module-subtitle">Official BaFin-compliant financial proof required for the German National Student Visa.</div>
                     </div>
                     <span style="font-size: 20px; font-weight: 800;" id="icon-blocked">+</span>
                 </div>
                 <div class="expand-body" id="body-blocked">
                     <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80" class="guide-img" alt="Financial Planning">
 Required Funding & Setup Workflow:
-1. Required Amount: As mandated by German embassy regulations, students must deposit sufficient funds into a blocked account before their embassy appointment.
-2. Approved Digital Providers: Use established digital platforms such as Fintiba or Expatrio for online verification in under 24 hours.
-3. Monthly Payouts: Once you arrive in Germany and complete city registration, funds are released in monthly installments directly into your checking account (Girokonto).
+1. Required Amount: As mandated by German embassy regulations.
+2. Approved Digital Providers: Use established platforms such as Fintiba or Expatrio.
                 </div>
             </div>
         </div>
