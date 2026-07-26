@@ -118,6 +118,13 @@
         /* HOUSING COMPARISON TABLE */
         .table-title { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
         
+        .table-container {
+            max-height: 380px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
         .housing-table {
             width: 100%;
             border-collapse: collapse;
@@ -126,11 +133,14 @@
         }
 
         .housing-table th {
+            position: sticky;
+            top: 0;
             background: #f1f5f9;
             padding: 12px;
             font-weight: 800;
             color: var(--text-dark);
             border-bottom: 2px solid var(--border);
+            z-index: 10;
         }
 
         .housing-table td {
@@ -141,6 +151,10 @@
         }
 
         .housing-table tr:hover { background: #f8fafc; }
+
+        .housing-table tr.selected-row {
+            background: #e0e7ff !important;
+        }
 
         .badge-tier {
             display: inline-block;
@@ -185,110 +199,117 @@
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: STATE SELECTOR & COMPARISON TABLE -->
+        <!-- RIGHT COLUMN: STATE SELECTOR & COMPLETE 16-STATE COMPARISON TABLE -->
         <div class="right-col">
             <div class="card">
-                <label class="select-label" for="regionSelect">📍 Select Your Target German Region/State:</label>
+                <label class="select-label" for="regionSelect">📍 Select Your Target German Federal State (16 Bundesländer):</label>
                 <select id="regionSelect" class="region-select" onchange="updateRegionDetails()">
+                    <option value="Baden-Württemberg">Baden-Württemberg (Stuttgart, Karlsruhe, Heidelberg)</option>
                     <option value="Bavaria">Bavaria (Munich, Erlangen, Nuremberg)</option>
                     <option value="Berlin">Berlin (Capital City State)</option>
-                    <option value="Baden-Württemberg">Baden-Württemberg (Stuttgart, Karlsruhe, Heidelberg)</option>
+                    <option value="Brandenburg">Brandenburg (Potsdam, Cottbus)</option>
+                    <option value="Bremen">Bremen (Bremen, Bremerhaven)</option>
+                    <option value="Hamburg">Hamburg (City State)</option>
                     <option value="Hesse">Hesse (Frankfurt am Main, Darmstadt)</option>
-                    <option value="North Rhine-Westphalia" selected>North Rhine-Westphalia (Aachen, Cologne, Bonn)</option>
-                    <option value="Lower Saxony">Lower Saxony (Hanover, Braunschweig)</option>
+                    <option value="Lower Saxony">Lower Saxony (Hanover, Braunschweig, Göttingen)</option>
+                    <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern (Rostock, Greifswald)</option>
+                    <option value="North Rhine-Westphalia" selected>North Rhine-Westphalia (Aachen, Cologne, Bonn, Dortmund)</option>
+                    <option value="Rhineland-Palatinate">Rhineland-Palatinate (Mainz, Trier, Kaiserslautern)</option>
+                    <option value="Saarland">Saarland (Saarbrücken)</option>
                     <option value="Saxony">Saxony (Dresden, Leipzig, Chemnitz)</option>
-                    <option value="Thuringia">Thuringia (Jena, Weimar)</option>
+                    <option value="Saxony-Anhalt">Saxony-Anhalt (Magdeburg, Halle)</option>
+                    <option value="Schleswig-Holstein">Schleswig-Holstein (Kiel, Lübeck)</option>
+                    <option value="Thuringia">Thuringia (Jena, Weimar, Erfurt)</option>
                 </select>
 
                 <div class="selected-info" id="selectedBox">
                     <h4 id="displayState">North Rhine-Westphalia</h4>
                     <p id="displayPrice">Average Monthly Rent: €350 – €550 / month</p>
-                    <p id="displayNote" style="margin-top: 6px; font-size: 13px;">Popular choice for international students with balanced cost of living.</p>
+                    <p id="displayNote" style="margin-top: 6px; font-size: 13px;">Most populated state with balanced student housing options in Aachen and Cologne.</p>
                 </div>
 
-                <div class="table-title">📊 Regional Rent Comparison Chart</div>
-                <table class="housing-table">
-                    <thead>
-                        <tr>
-                            <th>State / Region</th>
-                            <th>Cost Tier</th>
-                            <th>WG (Shared Flat)</th>
-                            <th>Dorm Room</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Bavaria</strong></td>
-                            <td><span class="badge-tier tier-high">High</span></td>
-                            <td>€520 – €850</td>
-                            <td>€280 – €420</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Berlin</strong></td>
-                            <td><span class="badge-tier tier-high">High</span></td>
-                            <td>€450 – €700</td>
-                            <td>€260 – €380</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Baden-Württemberg</strong></td>
-                            <td><span class="badge-tier tier-high">High</span></td>
-                            <td>€420 – €680</td>
-                            <td>€270 – €390</td>
-                        </tr>
-                        <tr>
-                            <td><strong>NRW</strong></td>
-                            <td><span class="badge-tier tier-mod">Moderate</span></td>
-                            <td>€350 – €550</td>
-                            <td>€240 – €350</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Lower Saxony</strong></td>
-                            <td><span class="badge-tier tier-mod">Moderate</span></td>
-                            <td>€340 – €520</td>
-                            <td>€230 – €340</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Saxony</strong></td>
-                            <td><span class="badge-tier tier-low">Affordable</span></td>
-                            <td>€250 – €400</td>
-                            <td>€200 – €300</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Thuringia</strong></td>
-                            <td><span class="badge-tier tier-low">Affordable</span></td>
-                            <td>€230 – €380</td>
-                            <td>€190 – €280</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-title">📊 Complete 16-State Rent Comparison Chart</div>
+                <div class="table-container">
+                    <table class="housing-table">
+                        <thead>
+                            <tr>
+                                <th>State / Region</th>
+                                <th>Cost Tier</th>
+                                <th>WG (Shared Flat)</th>
+                                <th>Dorm Room</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         const regionData = {
-            "Bavaria": { price: "€520 – €850 / month", note: "Munich is Germany's most expensive rental market. Apply for dorms early!" },
-            "Berlin": { price: "€450 – €700 / month", note: "High demand in central districts. Look into outer areas like Lichtenberg." },
-            "Baden-Württemberg": { price: "€420 – €680 / month", note: "High tech concentration (Karlsruhe, Stuttgart) drives moderate-to-high rents." },
-            "Hesse": { price: "€400 – €650 / month", note: "Frankfurt and Darmstadt have strong industrial hubs and moderate living costs." },
-            "North Rhine-Westphalia": { price: "€350 – €550 / month", note: "Most populated state with balanced student housing options in Aachen and Cologne." },
-            "Lower Saxony": { price: "€340 – €520 / month", note: "Moderate living costs with great public transport connectivity." },
-            "Saxony": { price: "€250 – €400 / month", note: "Top-tier technical universities (Dresden/Leipzig) with very affordable rent!" },
-            "Thuringia": { price: "€230 – €380 / month", note: "One of the most budget-friendly states in Germany for university students." }
+            "Baden-Württemberg": { tier: "High", badgeClass: "tier-high", wg: "€420 – €680", dorm: "€270 – €390", note: "High tech concentration (Karlsruhe, Stuttgart) drives moderate-to-high rents." },
+            "Bavaria": { tier: "High", badgeClass: "tier-high", wg: "€520 – €850", dorm: "€280 – €420", note: "Munich is Germany's most expensive rental market. Apply for dorms early!" },
+            "Berlin": { tier: "High", badgeClass: "tier-high", wg: "€450 – €700", dorm: "€260 – €380", note: "High demand in central districts. Look into outer areas like Lichtenberg." },
+            "Brandenburg": { tier: "Moderate", badgeClass: "tier-mod", wg: "€320 – €500", dorm: "€210 – €310", note: "Affordable alternative near Berlin with great S-Bahn connections from Potsdam." },
+            "Bremen": { tier: "Moderate", badgeClass: "tier-mod", wg: "€330 – €520", dorm: "€220 – €320", note: "Compact student city state with reasonable housing prices." },
+            "Hamburg": { tier: "High", badgeClass: "tier-high", wg: "€480 – €750", dorm: "€270 – €400", note: "Major northern port metropolis with competitive rental markets." },
+            "Hesse": { tier: "High", badgeClass: "tier-high", wg: "€400 – €650", dorm: "€250 – €370", note: "Frankfurt and Darmstadt have strong industrial hubs and moderate-to-high living costs." },
+            "Lower Saxony": { tier: "Moderate", badgeClass: "tier-mod", wg: "€340 – €520", dorm: "€230 – €340", note: "Moderate living costs with great public transport connectivity." },
+            "Mecklenburg-Vorpommern": { tier: "Affordable", badgeClass: "tier-low", wg: "€260 – €420", dorm: "€200 – €300", note: "Baltic coast region offering budget-friendly coastal student living in Rostock and Greifswald." },
+            "North Rhine-Westphalia": { tier: "Moderate", badgeClass: "tier-mod", wg: "€350 – €550", dorm: "€240 – €350", note: "Most populated state with balanced student housing options in Aachen and Cologne." },
+            "Rhineland-Palatinate": { tier: "Moderate", badgeClass: "tier-mod", wg: "€330 – €500", dorm: "€220 – €320", note: "Scenic wine country region with very manageable student living costs." },
+            "Saarland": { tier: "Affordable", badgeClass: "tier-low", wg: "€270 – €430", dorm: "€200 – €290", note: "Small state bordering France with highly accessible student accommodation." },
+            "Saxony": { tier: "Affordable", badgeClass: "tier-low", wg: "€250 – €400", dorm: "€200 – €300", note: "Top-tier technical universities (Dresden/Leipzig) with very affordable rent!" },
+            "Saxony-Anhalt": { tier: "Affordable", badgeClass: "tier-low", wg: "€240 – €390", dorm: "€190 – €280", note: "Among Germany's most economical states for university students in Magdeburg & Halle." },
+            "Schleswig-Holstein": { tier: "Moderate", badgeClass: "tier-mod", wg: "€360 – €540", dorm: "€240 – €340", note: "Northern maritime state with moderate student living expenses in Kiel." },
+            "Thuringia": { tier: "Affordable", badgeClass: "tier-low", wg: "€230 – €380", dorm: "€190 – €280", note: "One of the most budget-friendly states in Germany for university students in Jena and Erfurt." }
         };
+
+        function populateTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            Object.keys(regionData).forEach(state => {
+                const data = regionData[state];
+                const tr = document.createElement('tr');
+                tr.id = 'row-' + state.replace(/\s+/g, '-');
+                tr.innerHTML = `
+                    <td><strong>${state}</strong></td>
+                    <td><span class="badge-tier ${data.badgeClass}">${data.tier}</span></td>
+                    <td>${data.wg}</td>
+                    <td>${data.dorm}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
         function updateRegionDetails() {
             const selected = document.getElementById('regionSelect').value;
             const data = regionData[selected];
             
             document.getElementById('displayState').innerText = selected;
-            document.getElementById('displayPrice').innerText = "Average Monthly Rent: " + data.price;
+            document.getElementById('displayPrice').innerText = "Average Monthly WG Rent: " + data.wg + " | Dorm: " + data.dorm;
             document.getElementById('displayNote').innerText = data.note;
+
+            // Highlight selected row in table
+            document.querySelectorAll('.housing-table tr').forEach(row => row.classList.remove('selected-row'));
+            const activeRow = document.getElementById('row-' + selected.replace(/\s+/g, '-'));
+            if (activeRow) {
+                activeRow.classList.add('selected-row');
+                activeRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
         }
 
         function openGuide(moduleName) {
-            window.open('visa-details.html?module=' + moduleName, 'GuideWindow', 'width=800,height=700,scrollbars=yes');
+            window.open('visa-details.html?module=' + moduleName, '_blank');
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateTable();
+            updateRegionDetails();
+        });
     </script>
 </body>
 </html>
