@@ -45,11 +45,61 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
+            position: relative;
         }
 
         .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; text-decoration: none; color: var(--text-primary); }
         .nav-link { color: var(--brand-primary); text-decoration: none; font-weight: 700; font-size: 14px; }
         .nav-link:hover { text-decoration: underline; }
+
+        /* Account Dropdown Menu */
+        .user-menu-container { position: relative; }
+        .user-pill {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+        .user-pill:hover { border-color: var(--brand-primary); }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            width: 180px;
+            z-index: 100;
+            overflow: hidden;
+        }
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            text-align: left;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ef4444;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .dropdown-item:hover { background: var(--bg-muted); }
 
         .hero-card {
             background: rgba(255, 255, 255, 0.92);
@@ -79,6 +129,7 @@
             color: inherit;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
         }
 
         .dashboard-card:hover { transform: translateY(-4px); border-color: var(--brand-primary); }
@@ -93,7 +144,11 @@
     <div class="container">
         <header>
             <a href="index.html" class="logo">Guide to Germany</a>
-            <a href="login.html" class="nav-link">Member Access &rarr;</a>
+            
+            <!-- Dynamic Auth Area -->
+            <div id="authNav">
+                <!-- Script will inject Login Link OR User Account Dropdown here -->
+            </div>
         </header>
 
         <main>
@@ -103,14 +158,14 @@
             </div>
 
             <div class="grid">
-                <a href="universities.html" class="dashboard-card">
+                <a href="#" onclick="guardFeature(event, 'universities.html')" class="dashboard-card">
                     <div class="card-icon">🏛️</div>
                     <div class="card-title">Public Universities</div>
                     <div class="card-desc">Explore top-ranked tuition-free English programs at leading technical institutions.</div>
                     <div class="card-arrow">Browse Universities &rarr;</div>
                 </a>
 
-                <a href="visa.html" class="dashboard-card">
+                <a href="#" onclick="guardFeature(event, 'visa.html')" class="dashboard-card">
                     <div class="card-icon">📋</div>
                     <div class="card-title">Visa & Housing Blueprint</div>
                     <div class="card-desc">Step-by-step guides for blocked accounts, city registration (Anmeldung), and housing.</div>
@@ -120,5 +175,66 @@
         </main>
     </div>
 
+    <script>
+        // Check Auth Status & Render Header
+        document.addEventListener('DOMContentLoaded', () => {
+            const authNav = document.getElementById('authNav');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const username = localStorage.getItem('username') || 'Account';
+
+            if (isLoggedIn) {
+                authNav.innerHTML = `
+                    <div class="user-menu-container">
+                        <button class="user-pill" onclick="toggleDropdown()">
+                            <span>👤 ${username}</span>
+                            <span style="font-size: 10px;">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <button class="dropdown-item" onclick="logout()">Log Out</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                authNav.innerHTML = `<a href="login.html" class="nav-link">Member Access &rarr;</a>`;
+            }
+        });
+
+        // Toggle Account Dropdown Menu
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-pill') && !event.target.matches('.user-pill *')) {
+                const dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
+
+        // Guard Features from Unauthenticated Users
+        function guardFeature(event, pageUrl) {
+            event.preventDefault();
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+            if (isLoggedIn) {
+                window.location.href = pageUrl;
+            } else {
+                alert('Please sign up or log in first to access this feature!');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Log Out Function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>
