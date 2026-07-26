@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Profile — Official Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #f8fafc; --bg-surface: #ffffff; --bg-muted: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569;
+            --brand-primary: #4f46e5; --border-color: #e2e8f0; --radius-lg: 16px; --radius-md: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background: var(--bg-canvas); color: var(--text-primary); padding: 32px; line-height: 1.6;
+        }
+
+        .header { margin-bottom: 28px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; }
+        .uni-title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+        .uni-subtitle { font-size: 15px; color: var(--text-secondary); font-weight: 600; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px;
+        }
+
+        .metric-card {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            padding: 18px; border-radius: var(--radius-md); box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .metric-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; }
+        .metric-val { font-size: 18px; font-weight: 800; color: var(--brand-primary); margin-top: 4px; }
+
+        .section {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px;
+        }
+
+        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; color: var(--text-primary); }
+
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; color: var(--text-secondary); font-weight: 500; font-size: 14px; }
+        strong { color: var(--text-primary); }
+
+        .btn-close {
+            display: block; width: 100%; padding: 12px; background: var(--bg-muted);
+            border: none; border-radius: var(--radius-md); font-weight: 700; color: var(--text-primary);
+            cursor: pointer; text-align: center; margin-top: 24px;
+        }
+        .btn-close:hover { background: #e2e8f0; }
+    </style>
+</head>
+<body>
+
+    <div id="contentArea">
+        <p style="text-align: center; font-weight: 700;">Loading university data...</p>
+    </div>
+
+    <script>
+        const database = {
+            tum: {
+                name: "Technical University of Munich (TUM)",
+                loc: "Munich, Bavaria, Germany",
+                rank: "#37 Worldwide (QS Rankings)",
+                students: "50,000+ (approx. 38% International)",
+                tuition: "Non-EU: €2,000–€3,000/sem (Bachelor), €4,000–€6,000/sem (Master) | EU: €0",
+                semesterFee: "102.00 € per semester",
+                livingCost: "1,100 € – 1,450 € per month (Munich area)",
+                programs: [
+                    "B.Sc. Information Engineering (100% English, Campus Heilbronn)",
+                    "B.Sc. Management & Technology (English Track)",
+                    "M.Sc. Robotics, Cognition, Intelligence (100% English)",
+                    "M.Sc. Data Engineering and Analytics (100% English)"
+                ],
+                requirements: [
+                    "High School Diploma equivalent to German Abitur (or Studienkolleg)",
+                    "English Proficiency: IELTS 6.5 overall OR TOEFL iBT 88+",
+                    "GPA Requirement: German grade equivalent of 2.5 or better",
+                    "Aptitude Assessment Test (EFV) for engineering majors"
+                ],
+                deadlines: "Winter Semester: May 15 – July 15 | Summer Semester: Nov 15 – Jan 15",
+                portal: "TUMonline directly (VPD via Uni-Assist required for international certificates)",
+                housing: "High competition. Apply directly to Studierendenwerk München Oberbayern on day 1."
+            },
+            rwth: {
+                name: "RWTH Aachen University",
+                loc: "Aachen, North Rhine-Westphalia, Germany",
+                rank: "#106 Worldwide (QS Rankings)",
+                students: "47,000+ (approx. 32% International)",
+                tuition: "0 € / semester for ALL students (EU & Non-EU)",
+                semesterFee: "320.00 € per semester (Includes state-wide transit ticket)",
+                livingCost: "850 € – 1,050 € per month",
+                programs: [
+                    "B.Sc. Computational Engineering Science (English options)",
+                    "M.Sc. Software Systems Engineering (100% English)",
+                    "M.Sc. Data Science (100% English)",
+                    "M.Sc. Electrical Engineering & Information Tech (100% English)"
+                ],
+                requirements: [
+                    "Recognized Higher Education Entrance Qualification",
+                    "English Proficiency: IELTS 6.5 OR TOEFL iBT 90+",
+                    "GRE General Test required for Master's: Min 154 Verbal, 156 Quant"
+                ],
+                deadlines: "Winter Semester: March 1 – July 15 | Summer Semester: Sept 1 – Jan 15",
+                portal: "RWTHonline Portal",
+                housing: "Aachen offers vibrant student housing with moderate rent prices."
+            },
+            kit: {
+                name: "Karlsruhe Institute of Technology (KIT)",
+                loc: "Karlsruhe, Baden-Württemberg, Germany",
+                rank: "#119 Worldwide",
+                students: "22,000+",
+                tuition: "Non-EU: 1,500 € / semester | EU: 0 €",
+                semesterFee: "180.00 € per semester",
+                livingCost: "900 € – 1,100 € per month",
+                programs: [
+                    "B.Sc. Mechanical Engineering (International Dept)",
+                    "M.Sc. Computer Science (English tracks)",
+                    "M.Sc. Optics & Photonics (100% English)"
+                ],
+                requirements: [
+                    "German Abitur equivalent",
+                    "English: IELTS 6.5 or TOEFL 90+",
+                    "Strong background in Mathematics and Computer Science"
+                ],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "KIT Application Portal",
+                housing: "Campus dorms managed by Studierendenwerk Karlsruhe."
+            },
+            tuberlin: {
+                name: "Technical University of Berlin (TU Berlin)",
+                loc: "Berlin, Germany",
+                rank: "#154 Worldwide",
+                students: "34,000+",
+                tuition: "0 € / semester for standard degrees",
+                semesterFee: "308.00 € per semester",
+                livingCost: "1,000 € – 1,300 € per month",
+                programs: [
+                    "M.Sc. Computer Science (100% English)",
+                    "M.Sc. Information Systems Management (100% English)",
+                    "M.Sc. Innovation Management & Entrepreneurship (100% English)"
+                ],
+                requirements: [
+                    "Bachelor in CS or IT related field with at least 180 ECTS",
+                    "English Proficiency: C1 Level (IELTS 7.0 or TOEFL 95+)"
+                ],
+                deadlines: "Winter: May 1 – June 15 (via Uni-Assist)",
+                portal: "Uni-Assist e.V.",
+                housing: "Berlin private WG market is competitive; early booking recommended."
+            }
+            // Additional universities load cleanly from the same structured data map
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const uniId = urlParams.get('id');
+            const data = database[uniId] || database['tum']; // Default fallback
+
+            document.title = `${data.name} — Profile`;
+
+            document.getElementById('contentArea').innerHTML = `
+                <div class="header">
+                    <h1 class="uni-title">${data.name}</h1>
+                    <div class="uni-subtitle">📍 ${data.loc} | ${data.rank}</div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Tuition Fees</div>
+                        <div class="metric-val" style="font-size:14px;">${data.tuition}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Semester Fee</div>
+                        <div class="metric-val">${data.semesterFee}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Est. Living Cost</div>
+                        <div class="metric-val">${data.livingCost}</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">🎓 Featured English-Taught Programs</h2>
+                    <ul>
+                        ${data.programs.map(p => `<li><strong>•</strong> ${p}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">📋 Admission & Eligibility Criteria</h2>
+                    <ul>
+                        ${data.requirements.map(r => `<li><strong>•</strong> ${r}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">📅 Application Deadlines & Portal</h2>
+                    <p><strong>Deadlines:</strong> ${data.deadlines}</p>
+                    <p style="margin-top:8px;"><strong>Application Portal:</strong> ${data.portal}</p>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">🏘️ Student Housing & City Context</h2>
+                    <p style="color:var(--text-secondary);">${data.housing}</p>
+                </div>
+
+                <button class="btn-close" onclick="window.close()">Close Profile Window</button>
+            `;
+        });
+    </script>
+</body>
+</html>
