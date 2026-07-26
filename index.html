@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Guide to Germany — Relocation Platform</title>
+    <title>Your Guide to Germany — Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
             --brand-hover: #4338ca;
             --border-color: #e2e8f0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
             --radius-lg: 16px;
             --radius-md: 10px;
         }
@@ -27,207 +27,98 @@
 
         body {
             background: linear-gradient(
-                rgba(248, 250, 252, 0.88), 
-                rgba(248, 250, 252, 0.88)
+                rgba(248, 250, 252, 0.35), 
+                rgba(248, 250, 252, 0.35)
             ), url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            padding: 40px 24px;
         }
+
+        .container { max-width: 1000px; margin: 0 auto; }
 
         header {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 18px 24px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 20px;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-            text-decoration: none;
+            margin-bottom: 40px;
         }
 
-        .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #4f46e5, #0284c7);
-            color: #ffffff;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 16px;
-        }
+        .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; text-decoration: none; color: var(--text-primary); }
+        .nav-link { color: var(--brand-primary); text-decoration: none; font-weight: 700; font-size: 14px; }
+        .nav-link:hover { text-decoration: underline; }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover { color: var(--brand-primary); }
-
-        .btn-portal {
-            background: var(--bg-muted);
-            color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-portal:hover {
-            background: var(--brand-primary);
-            color: #ffffff !important;
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 48px auto;
-            padding: 0 24px;
-            flex: 1;
-            width: 100%;
-        }
-
-        .hero-banner {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        .hero-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 48px;
-            box-shadow: var(--shadow-sm);
+            padding: 48px 36px;
+            box-shadow: var(--shadow-md);
             margin-bottom: 32px;
             text-align: center;
         }
 
-        .hero-title { font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; color: var(--text-primary); }
-        .hero-subtitle { font-size: 18px; color: var(--text-secondary); line-height: 1.6; max-width: 780px; margin: 0 auto; }
+        .hero-card h1 { font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+        .hero-card p { color: var(--text-secondary); font-size: 18px; max-width: 650px; margin: 0 auto; line-height: 1.6; }
 
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
 
-        @media (max-width: 768px) { .grid-cards { grid-template-columns: 1fr; } }
-
-        .card-link { text-decoration: none; color: inherit; }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: 32px;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
             transition: all 0.2s ease;
-            height: 100%;
+            text-decoration: none;
+            color: inherit;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
 
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--brand-primary);
-        }
-
-        .feature-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .feature-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
-        .feature-badge { margin-top: 20px; font-size: 13px; font-weight: 700; color: var(--brand-primary); }
-
-        footer {
-            background: rgba(255, 255, 255, 0.92);
-            border-top: 1px solid var(--border-color);
-            padding: 24px;
-            margin-top: auto;
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
+        .dashboard-card:hover { transform: translateY(-4px); border-color: var(--brand-primary); }
+        .card-icon { font-size: 32px; margin-bottom: 16px; }
+        .card-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+        .card-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
+        .card-arrow { margin-top: auto; color: var(--brand-primary); font-weight: 700; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="nav-container">
-            <a href="index.html" class="brand">
-                <div class="brand-icon">G</div>
-                Guide to Germany
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" style="color: var(--brand-primary);">Dashboard</a></li>
-                <li><a href="universities.html">Universities</a></li>
-                <li><a href="visa.html">Visa & Housing Guide</a></li>
-                <li><a href="login.html" class="btn-portal">Member Portal</a></li>
-            </ul>
-        </div>
-    </header>
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo">Guide to Germany</a>
+            <a href="login.html" class="nav-link">Member Access &rarr;</a>
+        </header>
 
-    <main>
-        <div class="hero-banner">
-            <h1 class="hero-title">Complete German Higher Education & Relocation Portal</h1>
-            <p class="hero-subtitle">Comprehensive, structured guides designed to streamline your admission to top public universities, embassy visa processing, blocked accounts, and German housing search.</p>
-        </div>
+        <main>
+            <div class="hero-card">
+                <h1>Study & Relocate to Germany</h1>
+                <p>Your comprehensive resource for public university admissions, degree programs, visa processing, and student accommodation.</p>
+            </div>
 
-        <div class="grid-cards">
-            <a href="universities.html" class="card-link">
-                <div class="feature-card">
-                    <div>
-                        <h3>University Directory <span>&rarr;</span></h3>
-                        <p>Explore public universities with zero tuition fees. Access detailed program profiles, campus photos, language requirements, and application deadlines.</p>
-                    </div>
-                    <div class="feature-badge">Browse 6+ Featured Universities &rarr;</div>
-                </div>
-            </a>
-            <a href="visa.html" class="card-link">
-                <div class="feature-card">
-                    <div>
-                        <h3>Visa & Relocation Guide <span>&rarr;</span></h3>
-                        <p>In-depth step-by-step masterclasses covering housing registration (Anmeldung), Sperrkonto setup, health coverage, and embassy interview preparation.</p>
-                    </div>
-                    <div class="feature-badge">Open Relocation Blueprint &rarr;</div>
-                </div>
-            </a>
-        </div>
-    </main>
+            <div class="grid">
+                <a href="universities.html" class="dashboard-card">
+                    <div class="card-icon">🏛️</div>
+                    <div class="card-title">Public Universities</div>
+                    <div class="card-desc">Explore top-ranked tuition-free English programs at leading technical institutions.</div>
+                    <div class="card-arrow">Browse Universities &rarr;</div>
+                </a>
 
-    <footer>
-        &copy; 2026 Your Guide to Germany. All rights reserved.
-    </footer>
+                <a href="visa.html" class="dashboard-card">
+                    <div class="card-icon">📋</div>
+                    <div class="card-title">Visa & Housing Blueprint</div>
+                    <div class="card-desc">Step-by-step guides for blocked accounts, city registration (Anmeldung), and housing.</div>
+                    <div class="card-arrow">View Relocation Blueprint &rarr;</div>
+                </a>
+            </div>
+        </main>
+    </div>
 
 </body>
 </html>
