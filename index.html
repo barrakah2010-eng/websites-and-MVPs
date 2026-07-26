@@ -1,665 +1,580 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Guide to Germany — Platform</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-      /* 1. Design Tokens & Variables (Clean, High Contrast, No Blur) */
-      :root {
-        --bg-main: #0b0f19;
-        --bg-surface: #111827;
-        --bg-card: #1f2937;
-        --border-color: #374151;
-        --text-primary: #f9fafb;
-        --text-secondary: #9ca3af;
-        --accent-primary: #2563eb;
-        --accent-hover: #1d4ed8;
-        --accent-glow: rgba(37, 99, 235, 0.2);
-        --success: #10b981;
-        --danger: #ef4444;
-        --radius-md: 10px;
-        --radius-lg: 16px;
-        --transition: all 0.25s ease-in-out;
-      }
-
-      /* 2. Global Reset */
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Inter", system-ui, sans-serif;
-      }
-
-      body {
-        background-color: var(--bg-main);
-        color: var(--text-primary);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* 3. Header & Navigation */
-      header {
-        background: var(--bg-surface);
-        border-bottom: 1px solid var(--border-color);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
-
-      .nav-container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 16px 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 800;
-        font-size: 20px;
-        letter-spacing: -0.5px;
-      }
-
-      .brand-icon {
-        width: 32px;
-        height: 32px;
-        background: var(--accent-primary);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 900;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 24px;
-        list-style: none;
-      }
-
-      .nav-links a {
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 14px;
-        transition: var(--transition);
-      }
-
-      .nav-links a:hover {
-        color: var(--text-primary);
-      }
-
-      .auth-status-badge {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 12px;
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 20px;
-        font-size: 13px;
-      }
-
-      .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--danger);
-      }
-
-      .status-dot.online {
-        background: var(--success);
-      }
-
-      /* 4. Main Layout Grid */
-      main {
-        max-width: 1280px;
-        margin: 32px auto;
-        padding: 0 24px;
-        display: grid;
-        grid-template-columns: 1fr 340px;
-        gap: 32px;
-        flex: 1;
-      }
-
-      @media (max-width: 960px) {
-        main {
-          grid-template-columns: 1fr;
+        :root {
+            --bg-main: #0b0f19;
+            --bg-surface: #111827;
+            --bg-card: #1f2937;
+            --border-color: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --accent-primary: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-glow: rgba(37, 99, 235, 0.2);
+            --success: #10b981;
+            --danger: #ef4444;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition: all 0.25s ease-in-out;
         }
-      }
 
-      /* 5. Metrics Banner */
-      .metrics-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 16px;
-        margin-bottom: 32px;
-      }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
 
-      .metric-card {
-        background: var(--bg-surface);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        padding: 20px;
-      }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-      .metric-label {
-        font-size: 12px;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-      }
+        header {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-      .metric-value {
-        font-size: 28px;
-        font-weight: 700;
-      }
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-      /* 6. Tabs & Content Panels */
-      .panel {
-        background: var(--bg-surface);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        padding: 24px;
-        margin-bottom: 32px;
-      }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
 
-      .panel-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 12px;
-      }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
 
-      .panel-title {
-        font-size: 18px;
-        font-weight: 700;
-      }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
 
-      /* 7. Auth Form Styling */
-      .auth-tabs {
-        display: flex;
-        gap: 8px;
-        background: var(--bg-card);
-        padding: 4px;
-        border-radius: var(--radius-md);
-        margin-bottom: 20px;
-      }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: var(--transition);
+        }
 
-      .tab-btn {
-        flex: 1;
-        padding: 8px 16px;
-        border: none;
-        background: transparent;
-        color: var(--text-secondary);
-        font-weight: 600;
-        font-size: 13px;
-        cursor: pointer;
-        border-radius: 6px;
-        transition: var(--transition);
-      }
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
 
-      .tab-btn.active {
-        background: var(--accent-primary);
-        color: var(--text-primary);
-      }
+        .auth-status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+        }
 
-      .form-group {
-        margin-bottom: 16px;
-      }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--danger);
+        }
 
-      .form-group label {
-        display: block;
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text-secondary);
-        margin-bottom: 6px;
-      }
+        .status-dot.online {
+            background: var(--success);
+        }
 
-      .form-control {
-        width: 100%;
-        padding: 10px 14px;
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        color: var(--text-primary);
-        font-size: 14px;
-        outline: none;
-        transition: var(--transition);
-      }
+        main {
+            max-width: 1280px;
+            margin: 32px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            flex: 1;
+        }
 
-      .form-control:focus {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 3px var(--accent-glow);
-      }
+        @media (max-width: 960px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
 
-      .btn-submit {
-        width: 100%;
-        padding: 12px;
-        background: var(--accent-primary);
-        color: var(--text-primary);
-        border: none;
-        border-radius: var(--radius-md);
-        font-weight: 600;
-        font-size: 14px;
-        cursor: pointer;
-        transition: var(--transition);
-      }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
 
-      .btn-submit:hover {
-        background: var(--accent-hover);
-      }
+        .metric-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
 
-      /* 8. Subscriber List Component */
-      .subscriber-counter {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--accent-primary);
-        background: var(--accent-glow);
-        padding: 4px 8px;
-        border-radius: 12px;
-      }
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
 
-      .subscriber-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-height: 380px;
-        overflow-y: auto;
-      }
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+        }
 
-      .subscriber-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 14px;
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        font-size: 13px;
-      }
+        .panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 32px;
+        }
 
-      .subscriber-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
 
-      .avatar-small {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: #374151;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 11px;
-        color: var(--accent-primary);
-      }
+        .panel-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
 
-      /* 9. Feature Modules Grid */
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 16px;
-      }
+        .auth-tabs {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
 
-      .feature-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        padding: 16px;
-      }
+        .tab-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
 
-      .feature-card h4 {
-        font-size: 15px;
-        margin-bottom: 6px;
-      }
+        .tab-btn.active {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+        }
 
-      .feature-card p {
-        font-size: 13px;
-        color: var(--text-secondary);
-        line-height: 1.5;
-      }
+        .form-group {
+            margin-bottom: 16px;
+        }
 
-      /* 10. Footer */
-      footer {
-        background: var(--bg-surface);
-        border-top: 1px solid var(--border-color);
-        padding: 24px;
-        margin-top: auto;
-      }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
 
-      .footer-content {
-        max-width: 1280px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 13px;
-        color: var(--text-secondary);
-      }
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+        }
+
+        .subscriber-counter {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            background: var(--accent-glow);
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .subscriber-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+
+        .subscriber-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+        }
+
+        .subscriber-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--accent-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+        }
+
+        .feature-card h4 {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        footer {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            padding: 24px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
     </style>
-  </head>
-  <body>
-    <!-- NAVBAR -->
+</head>
+<body>
+
     <header>
-      <div class="nav-container">
-        <div class="brand">
-          <div class="brand-icon">G</div>
-          Guide to Germany
+        <div class="nav-container">
+            <div class="brand">
+                <div class="brand-icon">G</div>
+                Guide to Germany
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#analytics">Roadmap</a></li>
+                <li><a href="#subscribers">Subscribers</a></li>
+            </ul>
+            <div class="auth-status-badge">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText">Offline</span>
+            </div>
         </div>
-        <ul class="nav-links">
-          <li><a href="#dashboard">Dashboard</a></li>
-          <li><a href="#analytics">Roadmap</a></li>
-          <li><a href="#subscribers">Subscribers</a></li>
-        </ul>
-        <div class="auth-status-badge">
-          <span class="status-dot" id="statusDot"></span>
-          <span id="statusText">Offline</span>
-        </div>
-      </div>
     </header>
 
-    <!-- MAIN BODY -->
     <main>
-      <!-- LEFT COLUMN: SYSTEM CONTENT -->
-      <section class="main-content">
-        <!-- METRICS SUMMARY -->
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <div class="metric-label">System Health</div>
-            <div class="metric-value" style="color: var(--success)">99.98%</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Capacity Limit</div>
-            <div class="metric-value" id="capacityMetric">0 / 10</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Active Node</div>
-            <div class="metric-value">EU-Central-1</div>
-          </div>
-        </div>
+        <section class="main-content">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">System Health</div>
+                    <div class="metric-value" style="color: var(--success);">99.98%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Capacity Limit</div>
+                    <div class="metric-value" id="capacityMetric">0 / 10</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Active Node</div>
+                    <div class="metric-value">EU-West-1</div>
+                </div>
+            </div>
 
-        <!-- CORE PLATFORM MODULES -->
-        <div class="panel">
-          <div class="panel-header">
-            <h3 class="panel-title">Germany Relocation Services</h3>
-          </div>
-          <div class="features-grid">
-            <div class="feature-card">
-              <h4>University Finder</h4>
-              <p>
-                Search tuition-free degree programs across public German
-                universities.
-              </p>
+            <div class="panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">Germany Relocation Services</h3>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4>University Finder</h4>
+                        <p>Search tuition-free degree programs across public German universities.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Visa Guide</h4>
+                        <p>Step-by-step checklists for blocked accounts, insurance, and embassy appointments.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Realtime Sync</h4>
+                        <p>Subscriber metrics automatically updated in real-time via Firebase engine.</p>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-              <h4>Visa Guide</h4>
-              <p>
-                Step-by-step checklists for blocked accounts, insurance, and
-                embassy appointments.
-              </p>
-            </div>
-            <div class="feature-card">
-              <h4>Realtime Sync</h4>
-              <p>
-                Subscriber metrics automatically updated in real-time via
-                Firebase engine.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- RIGHT COLUMN: AUTH & SUBSCRIBER CONTROLS -->
-      <aside class="sidebar">
-        <!-- AUTHENTICATION PANEL -->
-        <div class="panel">
-          <div class="auth-tabs">
-            <button
-              class="tab-btn active"
-              id="tabSignIn"
-              onclick="switchTab('signin')"
-            >
-              Sign In
-            </button>
-            <button
-              class="tab-btn"
-              id="tabSignUp"
-              onclick="switchTab('signup')"
-            >
-              Sign Up
-            </button>
-          </div>
+        <aside class="sidebar">
+            <div class="panel">
+                <div class="auth-tabs">
+                    <button type="button" class="tab-btn active" id="tabSignIn">Sign In</button>
+                    <button type="button" class="tab-btn" id="tabSignUp">Sign Up</button>
+                </div>
 
-          <form id="authForm" onsubmit="handleAuth(event)">
-            <div class="form-group">
-              <label for="usernameInput">Username</label>
-              <input
-                type="text"
-                id="usernameInput"
-                class="form-control"
-                placeholder="e.g. alex_dev"
-                required
-              />
+                <form id="authForm">
+                    <div class="form-group" id="usernameGroup" style="display: none;">
+                        <label for="usernameInput">Username</label>
+                        <input type="text" id="usernameInput" class="form-control" placeholder="e.g. alex_dev">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailInput">Email Address</label>
+                        <input type="email" id="emailInput" class="form-control" placeholder="alex@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordInput">Password</label>
+                        <input type="password" id="passwordInput" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn">Sign In</button>
+                </form>
             </div>
-            <div class="form-group">
-              <label for="emailInput">Email Address</label>
-              <input
-                type="email"
-                id="emailInput"
-                class="form-control"
-                placeholder="alex@company.com"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="passwordInput">Password</label>
-              <input
-                type="password"
-                id="passwordInput"
-                class="form-control"
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            <button type="submit" class="btn-submit" id="submitBtn">
-              Sign In
-            </button>
-          </form>
-        </div>
 
-        <!-- LIVE SUBSCRIBER LIST (MAX CAPPED) -->
-        <div class="panel">
-          <div class="panel-header">
-            <h3 class="panel-title">Subscribers</h3>
-            <span class="subscriber-counter" id="subCounter">0 / 10 Max</span>
-          </div>
-          <ul class="subscriber-list" id="subscriberContainer">
-            <!-- Dynamic subscriber items render here -->
-          </ul>
-        </div>
-      </aside>
+            <div class="panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">Subscribers</h3>
+                    <span class="subscriber-counter" id="subCounter">0 / 10 Max</span>
+                </div>
+                <ul class="subscriber-list" id="subscriberContainer">
+                    <li style="font-size: 12px; color: var(--text-secondary); text-align: center; padding: 12px;">Loading subscribers...</li>
+                </ul>
+            </div>
+        </aside>
     </main>
 
-    <!-- FOOTER -->
     <footer>
-      <div class="footer-content">
-        <div>&copy; 2026 Your Guide to Germany. All rights reserved.</div>
-        <div>Deployed on Netlify & Firebase</div>
-      </div>
+        <div class="footer-content">
+            <div>&copy; 2026 Your Guide to Germany. All rights reserved.</div>
+            <div>Deployed on Netlify & Firebase</div>
+        </div>
     </footer>
 
-    <!-- 11. FIREBASE SDK & EXECUTION -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-      import {
-        getDatabase,
-        ref,
-        set,
-        onValue,
-      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-      // YOUR EXACT FIREBASE CREDENTIALS INTEGRATED HERE
-      const firebaseConfig = {
-        apiKey: "AIzaSyAyZFvDYKw1wikerlF_HX_q_gQdXoPvhyI",
-        authDomain: "your-guide-to-germany.firebaseapp.com",
-        // Make sure this exact europe-west1 URL is present:
-        databaseURL:
-          "https://your-guide-to-germany-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "your-guide-to-germany",
-        storageBucket: "your-guide-to-germany.firebasestorage.app",
-        messagingSenderId: "1029641813508",
-        appId: "1:1029641813508:web:32c3a975f76bee69437f51",
-        measurementId: "G-QLTVYN1RHM",
-      };
-      // Initialize Services
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getDatabase(app);
+        // FIREBASE CREDENTIALS WITH CORRECTED EUROPEAN REGION URL
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyZFvDYKw1wikerlF_HX_q_gQdXoPvhyI",
+            authDomain: "your-guide-to-germany.firebaseapp.com",
+            databaseURL: "https://your-guide-to-germany-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "your-guide-to-germany",
+            storageBucket: "your-guide-to-germany.firebasestorage.app",
+            messagingSenderId: "1029641813508",
+            appId: "1:1029641813508:web:32c3a975f76bee69437f51",
+            measurementId: "G-QLTVYN1RHM"
+        };
 
-      // App States
-      let currentMode = "signin";
-      const MAX_SUBSCRIBERS = 10;
-      let localSubscribers = [];
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
 
-      // DOM Cache
-      const tabSignIn = document.getElementById("tabSignIn");
-      const tabSignUp = document.getElementById("tabSignUp");
-      const submitBtn = document.getElementById("submitBtn");
-      const statusDot = document.getElementById("statusDot");
-      const statusText = document.getElementById("statusText");
-      const subscriberContainer = document.getElementById(
-        "subscriberContainer"
-      );
-      const subCounter = document.getElementById("subCounter");
-      const capacityMetric = document.getElementById("capacityMetric");
+        let currentMode = 'signin';
+        const MAX_SUBSCRIBERS = 10;
+        let localSubscribers = [];
 
-      // Tab Handler
-      window.switchTab = function (mode) {
-        currentMode = mode;
-        if (mode === "signin") {
-          tabSignIn.classList.add("active");
-          tabSignUp.classList.remove("active");
-          submitBtn.innerText = "Sign In";
-        } else {
-          tabSignUp.classList.add("active");
-          tabSignIn.classList.remove("active");
-          submitBtn.innerText = "Register & Subscribe";
+        const tabSignIn = document.getElementById('tabSignIn');
+        const tabSignUp = document.getElementById('tabSignUp');
+        const usernameGroup = document.getElementById('usernameGroup');
+        const usernameInput = document.getElementById('usernameInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const authForm = document.getElementById('authForm');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const subscriberContainer = document.getElementById('subscriberContainer');
+        const subCounter = document.getElementById('subCounter');
+        const capacityMetric = document.getElementById('capacityMetric');
+
+        function switchTab(mode) {
+            currentMode = mode;
+            if (mode === 'signin') {
+                tabSignIn.classList.add('active');
+                tabSignUp.classList.remove('active');
+                usernameGroup.style.display = 'none';
+                usernameInput.removeAttribute('required');
+                submitBtn.innerText = 'Sign In';
+            } else {
+                tabSignUp.classList.add('active');
+                tabSignIn.classList.remove('active');
+                usernameGroup.style.display = 'block';
+                usernameInput.setAttribute('required', 'true');
+                submitBtn.innerText = 'Register & Subscribe';
+            }
         }
-      };
 
-      // Form Submit Handler
-      window.handleAuth = async function (event) {
-        event.preventDefault();
-        const username = document.getElementById("usernameInput").value.trim();
-        const email = document.getElementById("emailInput").value.trim();
-        const password = document.getElementById("passwordInput").value.trim();
+        window.switchTab = switchTab;
+        tabSignIn.addEventListener('click', () => switchTab('signin'));
+        tabSignUp.addEventListener('click', () => switchTab('signup'));
 
-        if (!username || !email || !password) return;
+        authForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = usernameInput.value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
 
-        try {
-          if (currentMode === "signup") {
-            if (localSubscribers.length >= MAX_SUBSCRIBERS) {
-              alert(
-                `Capacity limit reached! Maximum allowed subscribers is ${MAX_SUBSCRIBERS}.`
-              );
-              return;
+            try {
+                if (currentMode === 'signup') {
+                    if (localSubscribers.length >= MAX_SUBSCRIBERS) {
+                        alert(`Limit reached! Max allowed subscribers is ${MAX_SUBSCRIBERS}.`);
+                        return;
+                    }
+
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+
+                    await set(ref(db, 'subscribers/' + user.uid), {
+                        username: username || email.split('@')[0],
+                        email: email,
+                        joinedAt: new Date().toISOString()
+                    });
+
+                    alert("Successfully registered and subscribed!");
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    alert("Signed in successfully!");
+                }
+            } catch (error) {
+                console.error("Firebase Auth Error:", error);
+                alert("Error: " + error.message);
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                statusDot.classList.add('online');
+                statusText.innerText = user.email.split('@')[0];
+            } else {
+                statusDot.classList.remove('online');
+                statusText.innerText = 'Offline';
+            }
+        });
+
+        const subscribersRef = ref(db, 'subscribers');
+        onValue(subscribersRef, (snapshot) => {
+            const data = snapshot.val();
+            subscriberContainer.innerHTML = '';
+            localSubscribers = [];
+
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    localSubscribers.push(data[key]);
+                });
             }
 
-            const userCredential = await createUserWithEmailAndPassword(
-              auth,
-              email,
-              password
-            );
-            const user = userCredential.user;
+            const count = localSubscribers.length;
+            subCounter.innerText = `${count} / ${MAX_SUBSCRIBERS} Max`;
+            capacityMetric.innerText = `${count} / ${MAX_SUBSCRIBERS}`;
 
-            const subRef = ref(db, "subscribers/" + user.uid);
-            await set(subRef, {
-              username: username,
-              email: email,
-              joinedAt: new Date().toISOString(),
-            });
+            if (count === 0) {
+                subscriberContainer.innerHTML = '<li style="font-size: 12px; color: var(--text-secondary); text-align: center; padding: 12px;">No active subscribers yet.</li>';
+                return;
+            }
 
-            alert("Account registered and added to subscriber list!");
-          } else {
-            await signInWithEmailAndPassword(auth, email, password);
-            alert("Signed in successfully!");
-          }
-        } catch (error) {
-          console.error("Auth error:", error);
-          alert(error.message);
-        }
-      };
-
-      // Auth Status Listener
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          statusDot.classList.add("online");
-          statusText.innerText = user.email.split("@")[0];
-        } else {
-          statusDot.classList.remove("online");
-          statusText.innerText = "Offline";
-        }
-      });
-
-      // Realtime Database Subscriber Listener
-      const subscribersRef = ref(db, "subscribers");
-      onValue(subscribersRef, (snapshot) => {
-        const data = snapshot.val();
-        subscriberContainer.innerHTML = "";
-        localSubscribers = [];
-
-        if (data) {
-          Object.keys(data).forEach((key) => {
-            localSubscribers.push(data[key]);
-          });
-        }
-
-        const count = localSubscribers.length;
-        subCounter.innerText = `${count} / ${MAX_SUBSCRIBERS} Max`;
-        capacityMetric.innerText = `${count} / ${MAX_SUBSCRIBERS}`;
-
-        if (count === 0) {
-          subscriberContainer.innerHTML =
-            '<li style="font-size: 12px; color: var(--text-secondary); text-align: center; padding: 12px;">No active subscribers yet.</li>';
-          return;
-        }
-
-        localSubscribers.slice(0, MAX_SUBSCRIBERS).forEach((sub) => {
-          const li = document.createElement("li");
-          li.className = "subscriber-item";
-
-          const initials = sub.username
-            ? sub.username.substring(0, 2).toUpperCase()
-            : "US";
-
-          li.innerHTML = `
+            localSubscribers.slice(0, MAX_SUBSCRIBERS).forEach(sub => {
+                const li = document.createElement('li');
+                li.className = 'subscriber-item';
+                const initials = sub.username ? sub.username.substring(0, 2).toUpperCase() : 'US';
+                
+                li.innerHTML = `
                     <div class="subscriber-info">
                         <div class="avatar-small">${initials}</div>
                         <div>
@@ -669,9 +584,12 @@
                     </div>
                     <span style="font-size: 11px; color: var(--success); font-weight: 600;">Active</span>
                 `;
-          subscriberContainer.appendChild(li);
+                subscriberContainer.appendChild(li);
+            });
+        }, (error) => {
+            console.error("Database Read Error:", error);
+            subscriberContainer.innerHTML = '<li style="font-size: 12px; color: var(--danger); text-align: center; padding: 12px;">Error loading subscribers. Check Rules!</li>';
         });
-      });
     </script>
-  </body>
+</body>
 </html>
