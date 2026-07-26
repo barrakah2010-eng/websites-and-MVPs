@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Public German Universities — Directory</title>
+    <title>Public German Universities — Directory & Details</title>
     
     <!-- Protected Route Script -->
     <script>
@@ -71,6 +71,23 @@
         }
         .dropdown-item:hover { background: var(--bg-muted); }
 
+        /* Tabs Bar Styling */
+        .tabs-header {
+            display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.7); border: 1px solid var(--border-color);
+            padding: 10px 18px; border-radius: 30px; font-weight: 700; font-size: 13px;
+            cursor: pointer; white-space: nowrap; transition: all 0.2s ease; color: var(--text-secondary);
+        }
+        .tab-btn:hover { background: #ffffff; color: var(--brand-primary); }
+        .tab-btn.active { background: var(--brand-primary); color: #ffffff; border-color: var(--brand-primary); }
+
+        /* Tab Content Panes */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
         .header-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
         .header-subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 36px; font-weight: 600; }
 
@@ -95,19 +112,43 @@
         .uni-loc { font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 12px; }
         .uni-excerpt { font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
 
-        .btn-open-win {
+        .btn-open-tab {
             margin-top: auto; padding: 12px; background: var(--brand-primary); color: #ffffff;
             border: none; border-radius: var(--radius-md); font-weight: 700; font-size: 14px;
             cursor: pointer; text-align: center; transition: background 0.2s ease;
         }
-        .btn-open-win:hover { background: var(--brand-hover); }
+        .btn-open-tab:hover { background: var(--brand-hover); }
+
+        /* Detailed View Styles inside Tabs */
+        .detail-container {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+            padding: 36px; box-shadow: var(--shadow-md);
+        }
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px;
+        }
+        .metric-card {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            padding: 18px; border-radius: var(--radius-md); box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .metric-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; }
+        .metric-val { font-size: 16px; font-weight: 800; color: var(--brand-primary); margin-top: 4px; }
+
+        .section {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px;
+        }
+        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; color: var(--text-primary); }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; color: var(--text-secondary); font-weight: 500; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="top-bar">
-            <a href="index.html" class="back-link">&larr; Return to Dashboard</a>
+            <a href="index.html" class="back-link">&larr; Return to Main Dashboard</a>
             
             <div style="position: relative;">
                 <button class="user-pill" onclick="toggleDropdown()">
@@ -120,32 +161,196 @@
             </div>
         </div>
 
-        <h1 class="header-title">Top 10 Public German Universities</h1>
-        <p class="header-subtitle">Comprehensive directory of premier tuition-free institutions offering full English-taught programs.</p>
-
-        <div class="uni-grid" id="uniGrid">
-            <!-- Cards generated dynamically -->
+        <!-- Master Tabs Header -->
+        <div class="tabs-header" id="tabsHeader">
+            <button class="tab-btn active" onclick="switchTab('directory', this)">📂 All Universities Directory</button>
+            <!-- Individual University Tabs will inject dynamically here -->
         </div>
+
+        <!-- Tab 1: Directory Grid -->
+        <div id="tab-directory" class="tab-pane active">
+            <h1 class="header-title">Top 10 Public German Universities</h1>
+            <p class="header-subtitle">Click any university card to instantly open its detailed profile in a new tab.</p>
+            <div class="uni-grid" id="uniGrid"></div>
+        </div>
+
+        <!-- Dynamic University Detail Tabs container -->
+        <div id="detailTabsContainer"></div>
     </div>
 
     <script>
         const universities = [
-            { id: "tum", name: "Technical University of Munich (TUM)", loc: "Munich, Bavaria", tag: "Top 10 Worldwide", img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", desc: "Germany's premier technical institute, world-renowned for computer engineering, robotics, and quantitative tech research." },
-            { id: "rwth", name: "RWTH Aachen University", loc: "Aachen, North Rhine-Westphalia", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", desc: "Europe's largest technical university, fostering high-impact industrial research and advanced software systems engineering." },
-            { id: "kit", name: "Karlsruhe Institute of Technology (KIT)", loc: "Karlsruhe, Baden-Württemberg", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", desc: "The Research University in the Helmholtz Association driving breakthroughs in cyber-physical systems and software architecture." },
-            { id: "tuberlin", name: "Technical University of Berlin (TU Berlin)", loc: "Berlin (Capital)", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=600&q=80", desc: "Located in Germany's tech startup capital, excelling in computer science, enterprise information systems, and tech innovation." },
-            { id: "lmu", name: "LMU Munich (Ludwig-Maximilians-Universität)", loc: "Munich, Bavaria", tag: "Top Ranked", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80", desc: "One of Europe's premier academic and research institutions with leading programs in data science and computational sciences." },
-            { id: "heidelberg", name: "Heidelberg University", loc: "Heidelberg, Baden-Württemberg", tag: "Germany's Oldest", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80", desc: "Founded in 1386, combining rich history with modern excellence in scientific computing and translational research." },
-            { id: "tudresden", name: "TU Dresden (Technische Universität Dresden)", loc: "Dresden, Saxony", tag: "Silicon Saxony", img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80", desc: "One of Germany's 11 Universities of Excellence, located in Europe's largest microelectronics ecosystem." },
-            { id: "stuttgart", name: "University of Stuttgart", loc: "Stuttgart, Baden-Württemberg", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", desc: "Hub for automotive software engineering, simulation technology, and advanced industrial automation." },
-            { id: "darmstadt", name: "TU Darmstadt", loc: "Darmstadt, Hesse", tag: "IT Security Hub", img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", desc: "Leading technical university widely known as Germany's powerhouse for cybersecurity and artificial intelligence." },
-            { id: "bonn", name: "University of Bonn", loc: "Bonn, North Rhine-Westphalia", tag: "University of Excellence", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", desc: "Internationally renowned for mathematics, computer science, autonomous systems, and scientific research." }
+            { 
+                id: "tum", name: "Technical University of Munich (TUM)", loc: "Munich, Bavaria", tag: "Top 10 Worldwide", 
+                img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", 
+                desc: "Germany's premier technical institute, world-renowned for computer engineering, robotics, and quantitative tech research.",
+                rank: "#37 Worldwide (QS Rankings)", students: "50,000+ (approx. 38% International)",
+                tuition: "Non-EU: €2,000–€3,000/sem (Bachelor), €4,000–€6,000/sem (Master) | EU: €0",
+                semesterFee: "102.00 € per semester", livingCost: "1,100 € – 1,450 € per month",
+                programs: [
+                    "B.Sc. Information Engineering (100% English, Campus Heilbronn)",
+                    "B.Sc. Management & Technology (English Track)",
+                    "M.Sc. Robotics, Cognition, Intelligence (100% English)",
+                    "M.Sc. Data Engineering and Analytics (100% English)"
+                ],
+                requirements: [
+                    "High School Diploma equivalent to German Abitur (or Studienkolleg)",
+                    "English Proficiency: IELTS 6.5 overall OR TOEFL iBT 88+",
+                    "GPA Requirement: German grade equivalent of 2.5 or better",
+                    "Aptitude Assessment Test (EFV) for engineering majors"
+                ],
+                deadlines: "Winter Semester: May 15 – July 15 | Summer Semester: Nov 15 – Jan 15",
+                portal: "TUMonline directly (VPD via Uni-Assist required for international certificates)",
+                housing: "High competition. Apply directly to Studierendenwerk München Oberbayern on day 1."
+            },
+            { 
+                id: "rwth", name: "RWTH Aachen University", loc: "Aachen, North Rhine-Westphalia", tag: "0 € Tuition", 
+                img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", 
+                desc: "Europe's largest technical university, fostering high-impact industrial research and advanced software systems engineering.",
+                rank: "#106 Worldwide (QS Rankings)", students: "47,000+ (approx. 32% International)",
+                tuition: "0 € / semester for ALL students (EU & Non-EU)",
+                semesterFee: "320.00 € per semester (Includes state-wide transit ticket)", livingCost: "850 € – 1,050 € per month",
+                programs: [
+                    "B.Sc. Computational Engineering Science (English options)",
+                    "M.Sc. Software Systems Engineering (100% English)",
+                    "M.Sc. Data Science (100% English)",
+                    "M.Sc. Electrical Engineering & Information Tech (100% English)"
+                ],
+                requirements: [
+                    "Recognized Higher Education Entrance Qualification",
+                    "English Proficiency: IELTS 6.5 OR TOEFL iBT 90+",
+                    "GRE General Test required for Master's: Min 154 Verbal, 156 Quant"
+                ],
+                deadlines: "Winter Semester: March 1 – July 15 | Summer Semester: Sept 1 – Jan 15",
+                portal: "RWTHonline Portal",
+                housing: "Aachen offers vibrant student housing with moderate rent prices."
+            },
+            { 
+                id: "kit", name: "Karlsruhe Institute of Technology (KIT)", loc: "Karlsruhe, Baden-Württemberg", tag: "0 € Tuition", 
+                img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", 
+                desc: "The Research University in the Helmholtz Association driving breakthroughs in cyber-physical systems and software architecture.",
+                rank: "#119 Worldwide", students: "22,000+",
+                tuition: "Non-EU: 1,500 € / semester | EU: 0 €",
+                semesterFee: "180.00 € per semester", livingCost: "900 € – 1,100 € per month",
+                programs: [
+                    "B.Sc. Mechanical Engineering (International Dept)",
+                    "M.Sc. Computer Science (English tracks)",
+                    "M.Sc. Optics & Photonics (100% English)"
+                ],
+                requirements: [
+                    "German Abitur equivalent",
+                    "English: IELTS 6.5 or TOEFL 90+",
+                    "Strong background in Mathematics and Computer Science"
+                ],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "KIT Application Portal",
+                housing: "Campus dorms managed by Studierendenwerk Karlsruhe."
+            },
+            { 
+                id: "tuberlin", name: "Technical University of Berlin (TU Berlin)", loc: "Berlin (Capital)", tag: "0 € Tuition", 
+                img: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=600&q=80", 
+                desc: "Located in Germany's tech startup capital, excelling in computer science, enterprise information systems, and tech innovation.",
+                rank: "#154 Worldwide", students: "34,000+",
+                tuition: "0 € / semester for standard degrees",
+                semesterFee: "308.00 € per semester", livingCost: "1,000 € – 1,300 € per month",
+                programs: [
+                    "M.Sc. Computer Science (100% English)",
+                    "M.Sc. Information Systems Management (100% English)",
+                    "M.Sc. Innovation Management & Entrepreneurship (100% English)"
+                ],
+                requirements: [
+                    "Bachelor in CS or IT related field with at least 180 ECTS",
+                    "English Proficiency: C1 Level (IELTS 7.0 or TOEFL 95+)"
+                ],
+                deadlines: "Winter: May 1 – June 15 (via Uni-Assist)",
+                portal: "Uni-Assist e.V.",
+                housing: "Berlin private WG market is competitive; early booking recommended."
+            },
+            { 
+                id: "lmu", name: "LMU Munich (Ludwig-Maximilians-Universität)", loc: "Munich, Bavaria", tag: "Top Ranked", 
+                img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80", 
+                desc: "One of Europe's premier academic and research institutions with leading programs in data science and computational sciences.",
+                rank: "#54 Worldwide", students: "52,000+",
+                tuition: "0 € / semester for standard programs",
+                semesterFee: "150.00 € per semester", livingCost: "1,100 € – 1,400 € per month",
+                programs: ["M.Sc. Data Science", "M.Sc. Theoretical and Mathematical Physics", "M.Sc. Economics"],
+                requirements: ["Relevant Bachelor degree", "IELTS 6.5+ or TOEFL 88+"],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "LMU International Office / Uni-Assist",
+                housing: "Munich student housing association places students via lottery/waiting list."
+            },
+            { 
+                id: "heidelberg", name: "Heidelberg University", loc: "Heidelberg, Baden-Württemberg", tag: "Germany's Oldest", 
+                img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80", 
+                desc: "Founded in 1386, combining rich history with modern excellence in scientific computing and translational research.",
+                rank: "#87 Worldwide", students: "30,000+",
+                tuition: "Non-EU: 1,500 € / semester",
+                semesterFee: "172.00 € per semester", livingCost: "900 € – 1,150 € per month",
+                programs: ["M.Sc. Scientific Computing", "M.Sc. Molecular Biosciences", "M.Sc. Economics"],
+                requirements: ["Bachelor degree with strong GPA", "English C1 level"],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "Uni-Assist / University Portal",
+                housing: "Heidelberg student dorms managed by Studierendenwerk Heidelberg."
+            },
+            { 
+                id: "tudresden", name: "TU Dresden (Technische Universität Dresden)", loc: "Dresden, Saxony", tag: "Silicon Saxony", 
+                img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80", 
+                desc: "One of Germany's 11 Universities of Excellence, located in Europe's largest microelectronics ecosystem.",
+                rank: "#200 Worldwide", students: "29,000+",
+                tuition: "0 € / semester",
+                semesterFee: "270.00 € per semester (includes full transit)", livingCost: "750 € – 950 € per month",
+                programs: ["M.Sc. Nanoelectronic Systems", "M.Sc. Distributed Systems", "M.Sc. Computational Logic"],
+                requirements: ["Bachelor in Engineering or CS", "IELTS 6.5+"],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "TUD Online / Uni-Assist",
+                housing: "Affordable housing options in eastern Germany with short waiting lists."
+            },
+            { 
+                id: "stuttgart", name: "University of Stuttgart", loc: "Stuttgart, Baden-Württemberg", tag: "0 € Tuition", 
+                img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", 
+                desc: "Hub for automotive software engineering, simulation technology, and advanced industrial automation.",
+                rank: "#250 Worldwide", students: "25,000+",
+                tuition: "Non-EU: 1,500 € / semester",
+                semesterFee: "201.00 € per semester", livingCost: "950 € – 1,200 € per month",
+                programs: ["M.Sc. Information Technology", "M.Sc. Autonomous Systems in Computer Science", "M.Sc. Air Quality Control"],
+                requirements: ["Bachelor in relevant engineering discipline", "IELTS 6.5+"],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "C@MPUS University Portal",
+                housing: "Stuckert student residences managed by Studierendenwerk Stuttgart."
+            },
+            { 
+                id: "darmstadt", name: "TU Darmstadt", loc: "Darmstadt, Hesse", tag: "IT Security Hub", 
+                img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", 
+                desc: "Leading technical university widely known as Germany's powerhouse for cybersecurity and artificial intelligence.",
+                rank: "#246 Worldwide", students: "24,000+",
+                tuition: "0 € / semester for standard programs",
+                semesterFee: "290.00 € per semester", livingCost: "900 € – 1,150 € per month",
+                programs: ["M.Sc. Cybersecurity", "M.Sc. Artificial Intelligence", "M.Sc. Internet and Web-based Systems"],
+                requirements: ["Strong CS background", "IELTS 6.5+ or TOEFL 95+"],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "TUCaN Portal",
+                housing: "Darmstadt student village offers active community spaces."
+            },
+            { 
+                id: "bonn", name: "University of Bonn", loc: "Bonn, North Rhine-Westphalia", tag: "Excellence Cluster", 
+                img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", 
+                desc: "Internationally renowned for mathematics, computer science, autonomous systems, and scientific research.",
+                rank: "#89 Worldwide", students: "35,000+",
+                tuition: "0 € / semester",
+                semesterFee: "310.00 € per semester", livingCost: "850 € – 1,100 € per month",
+                programs: ["M.Sc. Mathematics", "M.Sc. Computer Science", "M.Sc. Astrobiology and Geosciences"],
+                requirements: ["Bachelor degree with matching ECTS credits", "English C1"],
+                deadlines: "Winter: July 15 | Summer: January 15",
+                portal: "Uni-Assist / University Portal",
+                housing: "Student dorms located across multiple scenic districts of Bonn."
+            }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
             const username = localStorage.getItem('username') || 'Account';
             document.getElementById('userPillText').innerText = `👤 ${username}`;
 
+            // Render Directory Grid Cards
             const grid = document.getElementById('uniGrid');
             grid.innerHTML = universities.map(u => `
                 <div class="uni-card">
@@ -158,24 +363,115 @@
                         <h3 class="uni-name">${u.name}</h3>
                         <div class="uni-loc">📍 ${u.loc}</div>
                         <p class="uni-excerpt">${u.desc}</p>
-                        <button class="btn-open-win" onclick="openUniWindow('${u.id}')">View Full Detailed Profile ↗</button>
+                        <button class="btn-open-tab" onclick="openUniTab('${u.id}')">Open Detailed Tab ↗</button>
                     </div>
                 </div>
             `).join('');
         });
 
-        // Open in a Dedicated Separate Window
-        function openUniWindow(uniId) {
-            const width = 950;
-            const height = 800;
-            const left = (screen.width - width) / 2;
-            const top = (screen.height - height) / 2;
-            
-            window.open(
-                `uni-details.html?id=${uniId}`,
-                `UniDetails_${uniId}`,
-                `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=yes`
-            );
+        // Open or Switch to University Tab
+        function openUniTab(uniId) {
+            const u = universities.find(item => item.id === uniId);
+            const tabsHeader = document.getElementById('tabsHeader');
+            const container = document.getElementById('detailTabsContainer');
+
+            let tabBtnId = `btn-tab-${uniId}`;
+            let paneId = `pane-tab-${uniId}`;
+
+            // If tab doesn't exist yet, create it dynamically
+            if (!document.getElementById(tabBtnId)) {
+                // Create tab header button with close option
+                const btn = document.createElement('button');
+                btn.id = tabBtnId;
+                btn.className = 'tab-btn';
+                btn.innerHTML = `${u.name.split('(')[0]} <span onclick="closeTab(event, '${uniId}')" style="margin-left:6px;font-weight:bold;">&times;</span>`;
+                btn.onclick = (e) => {
+                    if (e.target.tagName !== 'SPAN') switchTab(paneId, btn);
+                };
+                tabsHeader.appendChild(btn);
+
+                // Create tab content pane
+                const pane = document.createElement('div');
+                pane.id = paneId;
+                pane.className = 'tab-pane';
+                pane.innerHTML = `
+                    <div class="detail-container">
+                        <div style="margin-bottom: 24px; border-bottom: 2px solid var(--border-color); padding-bottom: 16px;">
+                            <h1 style="font-size: 26px; font-weight: 800; margin-bottom: 6px;">${u.name}</h1>
+                            <p style="color: var(--text-secondary); font-weight: 600;">📍 ${u.loc} | 🏆 ${u.rank}</p>
+                        </div>
+
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-label">Tuition Fees</div>
+                                <div class="metric-val" style="font-size:13px;">${u.tuition}</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Semester Fee</div>
+                                <div class="metric-val">${u.semesterFee}</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Est. Living Cost</div>
+                                <div class="metric-val">${u.livingCost}</div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">🎓 Featured English-Taught Programs</h2>
+                            <ul>${u.programs.map(p => `<li><strong>•</strong> ${p}</li>`).join('')}</ul>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">📋 Admission & Eligibility Criteria</h2>
+                            <ul>${u.requirements.map(r => `<li><strong>•</strong> ${r}</li>`).join('')}</ul>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">📅 Application Deadlines & Portal</h2>
+                            <p><strong>Deadlines:</strong> ${u.deadlines}</p>
+                            <p style="margin-top:6px;"><strong>Application Portal:</strong> ${u.portal}</p>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">🏘️ Student Housing Context</h2>
+                            <p style="color:var(--text-secondary); font-size: 14px;">${u.housing}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(pane);
+            }
+
+            // Switch view to the newly created/opened tab
+            switchTab(paneId, document.getElementById(tabBtnId));
+        }
+
+        function switchTab(targetPaneId, btnElement) {
+            // Hide all panes
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            // Activate chosen pane and button
+            if (targetPaneId === 'directory') {
+                document.getElementById('tab-directory').classList.add('active');
+            } else {
+                document.getElementById(targetPaneId).classList.add('active');
+            }
+            btnElement.classList.add('active');
+        }
+
+        function closeTab(event, uniId) {
+            event.stopPropagation();
+            const btn = document.getElementById(`btn-tab-${uniId}`);
+            const pane = document.getElementById(`pane-tab-${uniId}`);
+
+            if (btn.classList.contains('active')) {
+                // If closing active tab, switch back to directory first
+                switchTab('directory', document.querySelector('.tab-btn'));
+            }
+
+            btn.remove();
+            pane.remove();
         }
 
         function toggleDropdown() {
