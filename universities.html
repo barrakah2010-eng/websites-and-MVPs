@@ -3,273 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Germany University Directory & Application Windows</title>
+    <title>Public German Universities — Directory</title>
+    
+    <!-- Protected Route Script -->
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            alert('Please sign up or log in first to access this feature!');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-page: #cbd5e1;
-            --card-bg: #ffffff;
+            --bg-canvas: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-muted: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
             --brand-primary: #4f46e5;
             --brand-hover: #4338ca;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --open-green: #166534;
-            --open-bg: #dcfce7;
-            --closed-red: #991b1b;
-            --closed-bg: #fee2e2;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+            --radius-lg: 16px;
+            --radius-md: 10px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background-color: var(--bg-page);
-            color: var(--text-dark);
-            padding: 30px;
+            background: linear-gradient(
+                rgba(248, 250, 252, 0.35), 
+                rgba(248, 250, 252, 0.35)
+            ), url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: var(--text-primary); min-height: 100vh; padding: 40px 24px;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
+        }
+        .back-link { color: var(--brand-primary); text-decoration: none; font-weight: 700; font-size: 14px; }
+        .back-link:hover { text-decoration: underline; }
+
+        .user-pill {
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 30px;
+            font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
 
-        .header-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 28px;
-            border: 1px solid var(--border);
-            margin-bottom: 20px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        .dropdown-menu {
+            display: none; position: absolute; right: 0; top: 45px;
+            background: #ffffff; border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+            width: 180px; z-index: 100; overflow: hidden;
         }
-
-        .header-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
-        .header-desc { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-
-        .window-notice {
-            background: #f0fdf4;
-            border-left: 4px solid var(--open-green);
-            padding: 16px;
-            border-radius: 12px;
-            margin-top: 16px;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #14532d;
+        .dropdown-menu.show { display: block; }
+        .dropdown-item {
+            display: block; width: 100%; padding: 12px 16px; text-align: left;
+            background: none; border: none; font-size: 14px; font-weight: 700;
+            color: #ef4444; cursor: pointer;
         }
+        .dropdown-item:hover { background: var(--bg-muted); }
 
-        .window-notice strong { font-weight: 800; color: #052e16; }
+        .header-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+        .header-subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 36px; font-weight: 600; }
 
-        .filter-bar {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .search-input, .select-filter {
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            outline: none;
-            font-size: 14px;
-            font-weight: 600;
-            background: white;
-        }
-
-        .search-input { flex: 1; min-width: 240px; }
-
-        .uni-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-        }
+        .uni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
 
         .uni-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 22px;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+            overflow: hidden; box-shadow: var(--shadow-md); display: flex; flex-direction: column;
+            transition: all 0.2s ease;
         }
+        .uni-card:hover { transform: translateY(-4px); border-color: var(--brand-primary); }
 
-        .uni-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-        .uni-location { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; font-weight: 600; }
+        .uni-img { width: 100%; height: 180px; object-fit: cover; }
+        .uni-content { padding: 24px; display: flex; flex-direction: column; flex: 1; }
 
-        .window-badge-box {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
+        .uni-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+        .tag { background: #e0e7ff; color: var(--brand-primary); font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+        .tag-alt { background: #f1f5f9; color: var(--text-secondary); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+
+        .uni-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+        .uni-loc { font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 12px; }
+        .uni-excerpt { font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
+
+        .btn-open-win {
+            margin-top: auto; padding: 12px; background: var(--brand-primary); color: #ffffff;
+            border: none; border-radius: var(--radius-md); font-weight: 700; font-size: 14px;
+            cursor: pointer; text-align: center; transition: background 0.2s ease;
         }
-
-        .badge {
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .badge-open { background: var(--open-bg); color: var(--open-green); }
-        .badge-closed { background: var(--closed-bg); color: var(--closed-red); }
-
-        .detail-row {
-            font-size: 13px;
-            color: var(--text-dark);
-            margin-bottom: 6px;
-        }
-
-        .btn-view {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: var(--brand-primary);
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            margin-top: 14px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-view:hover { background: var(--brand-hover); }
-
-        @media (max-width: 768px) {
-            body { padding: 12px; }
-            .header-card { padding: 18px; }
-            .header-title { font-size: 20px; }
-            .uni-grid { grid-template-columns: 1fr; }
-            .filter-bar { flex-direction: column; }
-        }
+        .btn-open-win:hover { background: var(--brand-hover); }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="header-card">
-            <h1 class="header-title">🏛️ German University Admissions & Application Windows</h1>
-            <p class="header-desc">Search programs and track official German university application deadlines.</p>
+        <div class="top-bar">
+            <a href="index.html" class="back-link">&larr; Return to Dashboard</a>
             
-            <div class="window-notice">
-                <strong>💡 Note on Application Windows:</strong> German university application windows operate on strict fixed timelines—<strong>Winter Intake (Deadline: July 15)</strong> and <strong>Summer Intake (Deadline: January 15)</strong>. Applications are not processed continuously year-round.
+            <div style="position: relative;">
+                <button class="user-pill" onclick="toggleDropdown()">
+                    <span id="userPillText">👤 Account</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="dropdown-menu" id="userDropdown">
+                    <button class="dropdown-item" onclick="logout()">Log Out</button>
+                </div>
             </div>
         </div>
 
-        <div class="filter-bar">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search by University or City..." onkeyup="filterUnis()">
-            <select id="intakeFilter" class="select-filter" onchange="filterUnis()">
-                <option value="all">All Intake Windows</option>
-                <option value="winter">Winter Intake Active</option>
-                <option value="summer">Summer Intake Active</option>
-            </select>
-        </div>
+        <h1 class="header-title">Top 10 Public German Universities</h1>
+        <p class="header-subtitle">Comprehensive directory of premier tuition-free institutions offering full English-taught programs.</p>
 
-        <div class="uni-grid" id="uniGrid"></div>
+        <div class="uni-grid" id="uniGrid">
+            <!-- Cards generated dynamically -->
+        </div>
     </div>
 
     <script>
         const universities = [
-            {
-                id: "tum",
-                name: "Technical University of Munich (TUM)",
-                location: "Munich, Bavaria",
-                winterWindow: "May 15 – July 15",
-                summerWindow: "Nov 15 – Jan 15",
-                winterStatus: "Open",
-                summerStatus: "Closed",
-                language: "English / German",
-                tuition: "€2,000 – €3,000 / semester (Non-EU)",
-                details: "TUM requires early submission via Uni-Assist / TUMonline. Aptitude assessment tests apply for Computer Science and Engineering."
-            },
-            {
-                id: "rwth",
-                name: "RWTH Aachen University",
-                location: "Aachen, North Rhine-Westphalia",
-                winterWindow: "March 1 – July 15",
-                summerWindow: "Sept 1 – Jan 15",
-                winterStatus: "Open",
-                summerStatus: "Closed",
-                language: "English / German",
-                tuition: "€0 (Public / Semester Fee ~€320)",
-                details: "Renowned engineering hub. Requires Vorprüfungsdokumentation (VPD) via Uni-Assist prior to direct portal application."
-            },
-            {
-                id: "tu-berlin",
-                name: "TU Berlin",
-                location: "Berlin (Capital City)",
-                winterWindow: "May 1 – July 15",
-                summerWindow: "Nov 1 – Jan 15",
-                winterStatus: "Open",
-                summerStatus: "Closed",
-                language: "English / German",
-                tuition: "€0 (Public / Semester Fee ~€310)",
-                details: "Applications submitted exclusively through Uni-Assist. Strict deadline enforcement."
-            },
-            {
-                id: "kit",
-                name: "Karlsruhe Institute of Technology (KIT)",
-                location: "Karlsruhe, Baden-Württemberg",
-                winterWindow: "May 15 – July 15",
-                summerWindow: "Nov 15 – Jan 15",
-                winterStatus: "Open",
-                summerStatus: "Closed",
-                language: "English / German",
-                tuition: "€1,500 / semester (Baden-Württemberg Non-EU Fee)",
-                details: "State law charges €1,500/semester for Non-EU students in Baden-Württemberg."
-            }
+            { id: "tum", name: "Technical University of Munich (TUM)", loc: "Munich, Bavaria", tag: "Top 10 Worldwide", img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", desc: "Germany's premier technical institute, world-renowned for computer engineering, robotics, and quantitative tech research." },
+            { id: "rwth", name: "RWTH Aachen University", loc: "Aachen, North Rhine-Westphalia", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", desc: "Europe's largest technical university, fostering high-impact industrial research and advanced software systems engineering." },
+            { id: "kit", name: "Karlsruhe Institute of Technology (KIT)", loc: "Karlsruhe, Baden-Württemberg", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", desc: "The Research University in the Helmholtz Association driving breakthroughs in cyber-physical systems and software architecture." },
+            { id: "tuberlin", name: "Technical University of Berlin (TU Berlin)", loc: "Berlin (Capital)", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=600&q=80", desc: "Located in Germany's tech startup capital, excelling in computer science, enterprise information systems, and tech innovation." },
+            { id: "lmu", name: "LMU Munich (Ludwig-Maximilians-Universität)", loc: "Munich, Bavaria", tag: "Top Ranked", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80", desc: "One of Europe's premier academic and research institutions with leading programs in data science and computational sciences." },
+            { id: "heidelberg", name: "Heidelberg University", loc: "Heidelberg, Baden-Württemberg", tag: "Germany's Oldest", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80", desc: "Founded in 1386, combining rich history with modern excellence in scientific computing and translational research." },
+            { id: "tudresden", name: "TU Dresden (Technische Universität Dresden)", loc: "Dresden, Saxony", tag: "Silicon Saxony", img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80", desc: "One of Germany's 11 Universities of Excellence, located in Europe's largest microelectronics ecosystem." },
+            { id: "stuttgart", name: "University of Stuttgart", loc: "Stuttgart, Baden-Württemberg", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", desc: "Hub for automotive software engineering, simulation technology, and advanced industrial automation." },
+            { id: "darmstadt", name: "TU Darmstadt", loc: "Darmstadt, Hesse", tag: "IT Security Hub", img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", desc: "Leading technical university widely known as Germany's powerhouse for cybersecurity and artificial intelligence." },
+            { id: "bonn", name: "University of Bonn", loc: "Bonn, North Rhine-Westphalia", tag: "University of Excellence", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", desc: "Internationally renowned for mathematics, computer science, autonomous systems, and scientific research." }
         ];
 
-        function renderUniversities(data) {
-            const grid = document.getElementById('uniGrid');
-            grid.innerHTML = '';
-
-            data.forEach(u => {
-                const card = document.createElement('div');
-                card.className = 'uni-card';
-                card.innerHTML = `
-                    <div>
-                        <div class="uni-name">${u.name}</div>
-                        <div class="uni-location">📍 ${u.location}</div>
-                        
-                        <div class="window-badge-box">
-                            <span class="badge ${u.winterStatus === 'Open' ? 'badge-open' : 'badge-closed'}">
-                                Winter Window: ${u.winterWindow} (${u.winterStatus})
-                            </span>
-                        </div>
-
-                        <div class="detail-row"><strong>🌐 Language:</strong> ${u.language}</div>
-                        <div class="detail-row"><strong>💶 Tuition/Fee:</strong> ${u.tuition}</div>
-                    </div>
-                    <!-- Opens detailed view in a brand new browser tab -->
-                    <a href="visa-details.html?module=uni-${u.id}" target="_blank" class="btn-view">View Details (New Tab) →</a>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function filterUnis() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const intake = document.getElementById('intakeFilter').value;
-
-            const filtered = universities.filter(u => {
-                const matchesSearch = u.name.toLowerCase().includes(search) || u.location.toLowerCase().includes(search);
-                let matchesIntake = true;
-                if (intake === 'winter') matchesIntake = u.winterStatus === 'Open';
-                if (intake === 'summer') matchesIntake = u.summerStatus === 'Open';
-                return matchesSearch && matchesIntake;
-            });
-
-            renderUniversities(filtered);
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            renderUniversities(universities);
+            const username = localStorage.getItem('username') || 'Account';
+            document.getElementById('userPillText').innerText = `👤 ${username}`;
+
+            const grid = document.getElementById('uniGrid');
+            grid.innerHTML = universities.map(u => `
+                <div class="uni-card">
+                    <img src="${u.img}" class="uni-img" alt="${u.name}">
+                    <div class="uni-content">
+                        <div class="uni-tags">
+                            <span class="tag">${u.tag}</span>
+                            <span class="tag-alt">Public</span>
+                        </div>
+                        <h3 class="uni-name">${u.name}</h3>
+                        <div class="uni-loc">📍 ${u.loc}</div>
+                        <p class="uni-excerpt">${u.desc}</p>
+                        <button class="btn-open-win" onclick="openUniWindow('${u.id}')">View Full Detailed Profile ↗</button>
+                    </div>
+                </div>
+            `).join('');
         });
+
+        // Open in a Dedicated Separate Window
+        function openUniWindow(uniId) {
+            const width = 950;
+            const height = 800;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
+            
+            window.open(
+                `uni-details.html?id=${uniId}`,
+                `UniDetails_${uniId}`,
+                `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=yes`
+            );
+        }
+
+        function toggleDropdown() {
+            document.getElementById('userDropdown').classList.toggle('show');
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'login.html';
+        }
     </script>
 </body>
 </html>
