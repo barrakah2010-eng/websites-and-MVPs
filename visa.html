@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visa & Housing Blueprint — Guide to Germany</title>
+    <title>Visa & Housing Blueprint — Interactive Guide</title>
 
-    <!-- Auth Page Protection Script -->
+    <!-- Protected Route Script -->
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             alert('Please sign up or log in first to access this feature!');
@@ -13,93 +13,96 @@
         }
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-canvas: #f8fafc; --bg-surface: #ffffff; --bg-muted: #f1f5f9;
-            --text-primary: #0f172a; --text-secondary: #475569;
-            --brand-primary: #4f46e5; --border-color: #e2e8f0; --radius-lg: 16px; --radius-md: 10px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05); --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+            --bg-canvas: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-muted: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --brand-primary: #4f46e5;
+            --brand-hover: #4338ca;
+            --border-color: #e2e8f0;
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+            --radius-lg: 16px;
+            --radius-md: 10px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
             background: linear-gradient(
-                rgba(248, 250, 252, 0.35), 
-                rgba(248, 250, 252, 0.35)
+                rgba(248, 250, 252, 0.4), 
+                rgba(248, 250, 252, 0.4)
             ), url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
             background-size: cover; background-position: center; background-attachment: fixed;
-            color: var(--text-primary); padding: 40px 24px; min-height: 100vh;
+            color: var(--text-primary); min-height: 100vh; padding: 40px 24px;
         }
 
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; }
 
         .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
         }
+        .back-link { color: var(--brand-primary); text-decoration: none; font-weight: 700; font-size: 14px; }
 
-        .back-link { color: var(--brand-primary); text-decoration: none; font-weight: 700; }
+        .header-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+        .header-subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 36px; font-weight: 600; }
 
-        /* Account Dropdown */
-        .user-menu-container { position: relative; }
-        .user-pill {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow-sm);
-        }
-        .dropdown-menu {
-            display: none; position: absolute; right: 0; top: 45px;
-            background: #ffffff; border: 1px solid var(--border-color);
-            border-radius: var(--radius-md); box-shadow: var(--shadow-md);
-            width: 180px; z-index: 100; overflow: hidden;
-        }
-        .dropdown-menu.show { display: block; }
-        .dropdown-item {
-            display: block; width: 100%; padding: 12px 16px; text-align: left;
-            background: none; border: none; font-size: 14px; font-weight: 700;
-            color: #ef4444; cursor: pointer;
-        }
-        .dropdown-item:hover { background: var(--bg-muted); }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
 
-        .header { margin-bottom: 32px; }
-        .header h1 { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
-        .header p { color: var(--text-secondary); font-size: 16px; font-weight: 600; }
-
-        .blueprint-list { display: flex; flex-direction: column; gap: 20px; }
+        /* Blueprint Modules Column */
+        .modules-column { display: flex; flex-direction: column; gap: 20px; }
 
         .module-card {
-            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px);
             border: 1px solid var(--border-color); border-radius: var(--radius-lg);
-            padding: 28px; cursor: pointer; transition: all 0.2s ease;
-            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+            padding: 24px; box-shadow: var(--shadow-md); transition: transform 0.2s ease;
+        }
+        .module-card:hover { transform: translateY(-3px); }
+
+        .module-icon { font-size: 28px; margin-bottom: 10px; }
+        .module-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+        .module-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 18px; line-height: 1.5; }
+
+        .btn-action {
+            display: inline-block; padding: 10px 18px; background: var(--brand-primary);
+            color: #ffffff; border: none; border-radius: var(--radius-md); font-weight: 700;
+            font-size: 13px; cursor: pointer; transition: background 0.2s ease;
+        }
+        .btn-action:hover { background: var(--brand-hover); }
+
+        /* Map Interactive Container */
+        .map-card {
+            background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+            padding: 24px; box-shadow: var(--shadow-md); text-align: center;
         }
 
-        .module-card:hover { border-color: var(--brand-primary); }
+        .map-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+        .map-hint { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; font-weight: 600; }
 
-        .module-header { display: flex; justify-content: space-between; align-items: center; }
-        .module-title { font-size: 20px; font-weight: 800; }
-        .module-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
-        
-        .expand-body {
-            display: none; margin-top: 20px; padding-top: 20px;
-            border-top: 1px solid var(--border-color); font-size: 15px;
-            color: var(--text-secondary); line-height: 1.8; white-space: pre-line;
+        .svg-container { width: 100%; max-width: 440px; margin: 0 auto; }
+
+        /* SVG States Styling */
+        .state {
+            fill: #cbd5e1; stroke: #ffffff; stroke-width: 1.5;
+            cursor: pointer; transition: fill 0.2s ease, transform 0.2s ease;
         }
+        .state:hover { fill: var(--brand-primary); }
 
-        .guide-img { width: 100%; height: 240px; object-fit: cover; border-radius: var(--radius-md); margin: 16px 0; }
+        .state-high { fill: #fca5a5; }     /* Red tint for high cost */
+        .state-mod { fill: #fde047; }      /* Yellow tint for moderate cost */
+        .state-low { fill: #86efac; }      /* Green tint for affordable cost */
+
+        .state-high:hover, .state-mod:hover, .state-low:hover { fill: var(--brand-hover); }
+
+        .legend { display: flex; justify-content: center; gap: 16px; margin-top: 20px; font-size: 12px; font-weight: 700; }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
     </style>
 </head>
 <body>
@@ -107,93 +110,100 @@
     <div class="container">
         <div class="top-bar">
             <a href="index.html" class="back-link">&larr; Return to Dashboard</a>
-            
-            <div class="user-menu-container">
-                <button class="user-pill" onclick="toggleDropdown()">
-                    <span id="userPillText">👤 Account</span>
-                    <span style="font-size: 10px;">▼</span>
-                </button>
-                <div class="dropdown-menu" id="userDropdown">
-                    <button class="dropdown-item" onclick="logout()">Log Out</button>
-                </div>
-            </div>
         </div>
 
-        <div class="header">
-            <h1>Relocation & Visa Master Blueprint</h1>
-            <p>Click any section below to open detailed guides, legal paperwork checklists, and housing steps.</p>
-        </div>
+        <h1 class="header-title">Germany Visa & Housing Execution Blueprint</h1>
+        <p class="header-subtitle">Step-by-step consular guidance and state-by-state student rent estimates.</p>
 
-        <div class="blueprint-list">
-            <div class="module-card" onclick="toggleModule('housing')">
-                <div class="module-header">
-                    <div>
-                        <div class="module-title">1. Accommodation & Housing (Wohnungssuche)</div>
-                        <div class="module-subtitle">How to secure student housing (WG), get your Wohnungsgeberbestätigung, and complete City Registration (Anmeldung).</div>
-                    </div>
-                    <span style="font-size: 20px; font-weight: 800;" id="icon-housing">+</span>
+        <div class="grid-layout">
+            <!-- Left: 4 Core Modules -->
+            <div class="modules-column">
+                <div class="module-card">
+                    <div class="module-icon">💰</div>
+                    <h3 class="module-title">1. Blocked Account (Sperrkonto)</h3>
+                    <p class="module-desc">Requirements for depositing the mandatory €11,904 annual financial proof (€992/month) via certified providers.</p>
+                    <button class="btn-action" onclick="openModuleWindow('blocked-account')">View Detailed Guide ↗</button>
                 </div>
-                <div class="expand-body" id="body-housing">
-                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" class="guide-img" alt="German Housing">
-Step-by-Step Housing Strategy:
-1. Student dormitories (Studierendenwerk): Apply the exact day you submit your university application.
-2. Shared Apartments (WG): Use WG-Gesucht.de.
-3. Temporary Stay: Book a temporary stay for your first 2-3 weeks to attend flat viewings in person.
+
+                <div class="module-card">
+                    <div class="module-icon">🏥</div>
+                    <h3 class="module-title">2. Health Insurance (Krankenversicherung)</h3>
+                    <p class="module-desc">Statutory public insurance (TK/AOK/Barmer) at student rates (~€120–€130/mo) vs. private travel insurance coverage.</p>
+                    <button class="btn-action" onclick="openModuleWindow('health-insurance')">View Detailed Guide ↗</button>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">📄</div>
+                    <h3 class="module-title">3. Embassy Visa Checklist</h3>
+                    <p class="module-desc">Complete document assembly, digital application submission, consular fee (€75), and embassy interview strategies.</p>
+                    <button class="btn-action" onclick="openModuleWindow('embassy-checklist')">View Detailed Guide ↗</button>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🏘️</div>
+                    <h3 class="module-title">4. Post-Arrival Administration</h3>
+                    <p class="module-desc">City registration (Anmeldung within 14 days), unblocking your bank account, and obtaining your Residence Permit.</p>
+                    <button class="btn-action" onclick="openModuleWindow('post-arrival')">View Detailed Guide ↗</button>
                 </div>
             </div>
 
-            <div class="module-card" onclick="toggleModule('blocked')">
-                <div class="module-header">
-                    <div>
-                        <div class="module-title">2. Blocked Account Setup (Sperrkonto)</div>
-                        <div class="module-subtitle">Official BaFin-compliant financial proof required for the German National Student Visa.</div>
-                    </div>
-                    <span style="font-size: 20px; font-weight: 800;" id="icon-blocked">+</span>
+            <!-- Right: Interactive SVG Map -->
+            <div class="map-card">
+                <h3 class="map-title">Interactive Housing Map</h3>
+                <p class="map-hint">Click on any state (Bundesland) to view average student rent prices</p>
+
+                <div class="svg-container">
+                    <svg viewBox="0 0 600 750" width="100%" height="auto">
+                        <!-- Simplified interactive territory paths for all 16 states -->
+                        <g id="states">
+                            <path id="SH" class="state state-mod" d="M 220 40 L 320 30 L 330 110 L 230 120 Z" onclick="openStateWindow('Schleswig-Holstein')"><title>Schleswig-Holstein</title></path>
+                            <path id="HH" class="state state-high" d="M 260 125 L 290 125 L 290 145 L 260 145 Z" onclick="openStateWindow('Hamburg')"><title>Hamburg</title></path>
+                            <path id="MV" class="state state-low" d="M 335 40 L 510 50 L 500 140 L 335 115 Z" onclick="openStateWindow('Mecklenburg-Vorpommern')"><title>Mecklenburg-Vorpommern</title></path>
+                            <path id="HB" class="state state-mod" d="M 200 160 L 225 160 L 225 180 L 200 180 Z" onclick="openStateWindow('Bremen')"><title>Bremen</title></path>
+                            <path id="NI" class="state state-mod" d="M 140 130 L 330 145 L 310 260 L 150 240 Z" onclick="openStateWindow('Lower Saxony')"><title>Lower Saxony</title></path>
+                            <path id="BB" class="state state-low" d="M 390 150 L 530 160 L 510 320 L 370 290 Z" onclick="openStateWindow('Brandenburg')"><title>Brandenburg</title></path>
+                            <path id="BE" class="state state-high" d="M 440 210 L 470 210 L 470 235 L 440 235 Z" onclick="openStateWindow('Berlin')"><title>Berlin</title></path>
+                            <path id="ST" class="state state-low" d="M 315 265 L 385 270 L 370 370 L 300 350 Z" onclick="openStateWindow('Saxony-Anhalt')"><title>Saxony-Anhalt</title></path>
+                            <path id="NW" class="state state-mod" d="M 80 245 L 205 250 L 190 380 L 70 360 Z" onclick="openStateWindow('North Rhine-Westphalia')"><title>North Rhine-Westphalia</title></path>
+                            <path id="SN" class="state state-low" d="M 375 325 L 530 330 L 510 420 L 365 390 Z" onclick="openStateWindow('Saxony')"><title>Saxony</title></path>
+                            <path id="TH" class="state state-low" d="M 275 360 L 365 375 L 350 450 L 260 430 Z" onclick="openStateWindow('Thuringia')"><title>Thuringia</title></path>
+                            <path id="HE" class="state state-high" d="M 195 385 L 270 385 L 255 510 L 180 490 Z" onclick="openStateWindow('Hesse')"><title>Hesse</title></path>
+                            <path id="RP" class="state state-mod" d="M 70 370 L 175 390 L 160 500 L 60 470 Z" onclick="openStateWindow('Rhineland-Palatinate')"><title>Rhineland-Palatinate</title></path>
+                            <path id="SL" class="state state-mod" d="M 60 480 L 110 485 L 100 525 L 50 520 Z" onclick="openStateWindow('Saarland')"><title>Saarland</title></path>
+                            <path id="BW" class="state state-high" d="M 120 515 L 250 520 L 230 690 L 110 660 Z" onclick="openStateWindow('Baden-Württemberg')"><title>Baden-Württemberg</title></path>
+                            <path id="BY" class="state state-high" d="M 255 455 L 490 440 L 460 700 L 235 695 Z" onclick="openStateWindow('Bavaria')"><title>Bavaria</title></path>
+                        </g>
+                    </svg>
                 </div>
-                <div class="expand-body" id="body-blocked">
-                    <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80" class="guide-img" alt="Financial Planning">
-Required Funding & Setup Workflow:
-1. Required Amount: As mandated by German embassy regulations.
-2. Approved Digital Providers: Use established platforms such as Fintiba or Expatrio.
+
+                <div class="legend">
+                    <div class="legend-item"><span class="dot" style="background:#fca5a5;"></span> High Cost Tier</div>
+                    <div class="legend-item"><span class="dot" style="background:#fde047;"></span> Moderate Tier</div>
+                    <div class="legend-item"><span class="dot" style="background:#86efac;"></span> Affordable Tier</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const username = localStorage.getItem('username') || 'Account';
-            document.getElementById('userPillText').innerText = `👤 ${username}`;
-        });
-
-        function toggleDropdown() {
-            document.getElementById('userDropdown').classList.toggle('show');
+        function openModuleWindow(moduleId) {
+            const width = 900; const height = 750;
+            const left = (screen.width - width) / 2; const top = (screen.height - height) / 2;
+            window.open(
+                `visa-details.html?module=${moduleId}`,
+                `VisaModule_${moduleId}`,
+                `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
+            );
         }
 
-        window.onclick = function(event) {
-            if (!event.target.matches('.user-pill') && !event.target.matches('.user-pill *')) {
-                document.getElementById('userDropdown').classList.remove('show');
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('username');
-            localStorage.removeItem('userEmail');
-            window.location.href = 'login.html';
-        }
-
-        function toggleModule(id) {
-            const body = document.getElementById('body-' + id);
-            const icon = document.getElementById('icon-' + id);
-            
-            if (body.style.display === 'block') {
-                body.style.display = 'none';
-                icon.innerText = '+';
-            } else {
-                body.style.display = 'block';
-                icon.innerText = '−';
-            }
+        function openStateWindow(stateName) {
+            const width = 850; const height = 650;
+            const left = (screen.width - width) / 2; const top = (screen.height - height) / 2;
+            window.open(
+                `state-housing.html?state=${encodeURIComponent(stateName)}`,
+                `StateHousing_${stateName.replace(/\s+/g, '')}`,
+                `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
+            );
         }
     </script>
 </body>
