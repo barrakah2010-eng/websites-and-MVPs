@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Public Universities — Guide to Germany</title>
+    <title>Public German Universities — Directory</title>
     
-    <!-- Auth Page Protection Script -->
+    <!-- Protected Route Script -->
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             alert('Please sign up or log in first to access this feature!');
@@ -18,12 +18,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-canvas: #f8fafc; --bg-surface: #ffffff; --bg-muted: #f1f5f9;
-            --text-primary: #0f172a; --text-secondary: #475569;
-            --brand-primary: #4f46e5; --brand-hover: #4338ca; --border-color: #e2e8f0;
+            --bg-canvas: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-muted: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --brand-primary: #4f46e5;
+            --brand-hover: #4338ca;
+            --border-color: #e2e8f0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
-            --radius-lg: 16px; --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-md: 10px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -37,34 +43,20 @@
             color: var(--text-primary); min-height: 100vh; padding: 40px 24px;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; }
-        
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
 
-        .back-link { color: var(--brand-primary); text-decoration: none; font-weight: 700; }
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
+        }
+        .back-link { color: var(--brand-primary); text-decoration: none; font-weight: 700; font-size: 14px; }
         .back-link:hover { text-decoration: underline; }
 
-        /* Account Dropdown */
-        .user-menu-container { position: relative; }
         .user-pill {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow-sm);
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 30px;
+            font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
+
         .dropdown-menu {
             display: none; position: absolute; right: 0; top: 45px;
             background: #ffffff; border: 1px solid var(--border-color);
@@ -82,21 +74,16 @@
         .header-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
         .header-subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 36px; font-weight: 600; }
 
-        .uni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .uni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
 
         .uni-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            flex-direction: column;
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+            overflow: hidden; box-shadow: var(--shadow-md); display: flex; flex-direction: column;
             transition: all 0.2s ease;
         }
-
         .uni-card:hover { transform: translateY(-4px); border-color: var(--brand-primary); }
+
         .uni-img { width: 100%; height: 180px; object-fit: cover; }
         .uni-content { padding: 24px; display: flex; flex-direction: column; flex: 1; }
 
@@ -104,31 +91,16 @@
         .tag { background: #e0e7ff; color: var(--brand-primary); font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
         .tag-alt { background: #f1f5f9; color: var(--text-secondary); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
 
-        .uni-name { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+        .uni-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+        .uni-loc { font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 12px; }
         .uni-excerpt { font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
 
-        .btn-detail {
-            margin-top: auto; padding: 12px; background: var(--bg-muted); color: var(--text-primary);
+        .btn-open-win {
+            margin-top: auto; padding: 12px; background: var(--brand-primary); color: #ffffff;
             border: none; border-radius: var(--radius-md); font-weight: 700; font-size: 14px;
-            cursor: pointer; text-align: center; transition: all 0.2s ease;
+            cursor: pointer; text-align: center; transition: background 0.2s ease;
         }
-
-        .btn-detail:hover { background: var(--brand-primary); color: #ffffff; }
-
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(6px);
-            display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px;
-        }
-
-        .modal-card {
-            background: #ffffff; border-radius: var(--radius-lg); max-width: 700px; width: 100%;
-            max-height: 85vh; overflow-y: auto; padding: 36px; box-shadow: var(--shadow-md); position: relative;
-        }
-
-        .modal-close { position: absolute; top: 20px; right: 20px; border: none; background: var(--bg-muted); width: 32px; height: 32px; border-radius: 50%; font-weight: 800; cursor: pointer; }
-        .modal-title { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
-        .modal-body { font-size: 15px; color: var(--text-secondary); line-height: 1.7; white-space: pre-line; }
+        .btn-open-win:hover { background: var(--brand-hover); }
     </style>
 </head>
 <body>
@@ -137,7 +109,7 @@
         <div class="top-bar">
             <a href="index.html" class="back-link">&larr; Return to Dashboard</a>
             
-            <div class="user-menu-container">
+            <div style="position: relative;">
                 <button class="user-pill" onclick="toggleDropdown()">
                     <span id="userPillText">👤 Account</span>
                     <span style="font-size: 10px;">▼</span>
@@ -148,64 +120,66 @@
             </div>
         </div>
 
-        <h1 class="header-title">Public German Universities</h1>
-        <p class="header-subtitle">Top-ranked public academic institutions offering tuition-free English programs.</p>
+        <h1 class="header-title">Top 10 Public German Universities</h1>
+        <p class="header-subtitle">Comprehensive directory of premier tuition-free institutions offering full English-taught programs.</p>
 
-        <div class="uni-grid">
-            <div class="uni-card">
-                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80" class="uni-img" alt="TUM Campus">
-                <div class="uni-content">
-                    <div class="uni-tags"><span class="tag">0 € Tuition</span><span class="tag-alt">Munich</span></div>
-                    <h3 class="uni-name">Technical University of Munich</h3>
-                    <p class="uni-excerpt">Germany's premier technical institute excels in computer engineering, AI research, and robotics innovation.</p>
-                    <button class="btn-detail" onclick="openModal('tum')">Read Full Profile &rarr;</button>
-                </div>
-            </div>
-
-            <div class="uni-card">
-                <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80" class="uni-img" alt="RWTH Aachen">
-                <div class="uni-content">
-                    <div class="uni-tags"><span class="tag">0 € Tuition</span><span class="tag-alt">Aachen</span></div>
-                    <h3 class="uni-name">RWTH Aachen University</h3>
-                    <p class="uni-excerpt">Renowned global engineering powerhouse fostering industrial tech research and software systems development.</p>
-                    <button class="btn-detail" onclick="openModal('rwth')">Read Full Profile &rarr;</button>
-                </div>
-            </div>
-
-            <div class="uni-card">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" class="uni-img" alt="KIT Campus">
-                <div class="uni-content">
-                    <div class="uni-tags"><span class="tag">0 € Tuition</span><span class="tag-alt">Karlsruhe</span></div>
-                    <h3 class="uni-name">Karlsruhe Institute of Tech (KIT)</h3>
-                    <p class="uni-excerpt">The Research University in the Helmholtz Association, driving breakthroughs in software architectures and cyber physics.</p>
-                    <button class="btn-detail" onclick="openModal('kit')">Read Full Profile &rarr;</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-card">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <h2 class="modal-title" id="mTitle">Title</h2>
-            <div class="modal-body" id="mBody">Content...</div>
+        <div class="uni-grid" id="uniGrid">
+            <!-- Cards generated dynamically -->
         </div>
     </div>
 
     <script>
+        const universities = [
+            { id: "tum", name: "Technical University of Munich (TUM)", loc: "Munich, Bavaria", tag: "Top 10 Worldwide", img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", desc: "Germany's premier technical institute, world-renowned for computer engineering, robotics, and quantitative tech research." },
+            { id: "rwth", name: "RWTH Aachen University", loc: "Aachen, North Rhine-Westphalia", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", desc: "Europe's largest technical university, fostering high-impact industrial research and advanced software systems engineering." },
+            { id: "kit", name: "Karlsruhe Institute of Technology (KIT)", loc: "Karlsruhe, Baden-Württemberg", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", desc: "The Research University in the Helmholtz Association driving breakthroughs in cyber-physical systems and software architecture." },
+            { id: "tuberlin", name: "Technical University of Berlin (TU Berlin)", loc: "Berlin (Capital)", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=600&q=80", desc: "Located in Germany's tech startup capital, excelling in computer science, enterprise information systems, and tech innovation." },
+            { id: "lmu", name: "LMU Munich (Ludwig-Maximilians-Universität)", loc: "Munich, Bavaria", tag: "Top Ranked", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80", desc: "One of Europe's premier academic and research institutions with leading programs in data science and computational sciences." },
+            { id: "heidelberg", name: "Heidelberg University", loc: "Heidelberg, Baden-Württemberg", tag: "Germany's Oldest", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80", desc: "Founded in 1386, combining rich history with modern excellence in scientific computing and translational research." },
+            { id: "tudresden", name: "TU Dresden (Technische Universität Dresden)", loc: "Dresden, Saxony", tag: "Silicon Saxony", img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80", desc: "One of Germany's 11 Universities of Excellence, located in Europe's largest microelectronics ecosystem." },
+            { id: "stuttgart", name: "University of Stuttgart", loc: "Stuttgart, Baden-Württemberg", tag: "0 € Tuition", img: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80", desc: "Hub for automotive software engineering, simulation technology, and advanced industrial automation." },
+            { id: "darmstadt", name: "TU Darmstadt", loc: "Darmstadt, Hesse", tag: "IT Security Hub", img: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80", desc: "Leading technical university widely known as Germany's powerhouse for cybersecurity and artificial intelligence." },
+            { id: "bonn", name: "University of Bonn", loc: "Bonn, North Rhine-Westphalia", tag: "University of Excellence", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", desc: "Internationally renowned for mathematics, computer science, autonomous systems, and scientific research." }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             const username = localStorage.getItem('username') || 'Account';
             document.getElementById('userPillText').innerText = `👤 ${username}`;
+
+            const grid = document.getElementById('uniGrid');
+            grid.innerHTML = universities.map(u => `
+                <div class="uni-card">
+                    <img src="${u.img}" class="uni-img" alt="${u.name}">
+                    <div class="uni-content">
+                        <div class="uni-tags">
+                            <span class="tag">${u.tag}</span>
+                            <span class="tag-alt">Public</span>
+                        </div>
+                        <h3 class="uni-name">${u.name}</h3>
+                        <div class="uni-loc">📍 ${u.loc}</div>
+                        <p class="uni-excerpt">${u.desc}</p>
+                        <button class="btn-open-win" onclick="openUniWindow('${u.id}')">View Full Detailed Profile ↗</button>
+                    </div>
+                </div>
+            `).join('');
         });
+
+        // Open in a Dedicated Separate Window
+        function openUniWindow(uniId) {
+            const width = 950;
+            const height = 800;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
+            
+            window.open(
+                `uni-details.html?id=${uniId}`,
+                `UniDetails_${uniId}`,
+                `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=yes`
+            );
+        }
 
         function toggleDropdown() {
             document.getElementById('userDropdown').classList.toggle('show');
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.user-pill') && !event.target.matches('.user-pill *')) {
-                document.getElementById('userDropdown').classList.remove('show');
-            }
         }
 
         function logout() {
@@ -213,37 +187,6 @@
             localStorage.removeItem('username');
             localStorage.removeItem('userEmail');
             window.location.href = 'login.html';
-        }
-
-        const uniData = {
-            tum: {
-                title: "Technical University of Munich (TUM)",
-                content: `Overview & Academic Reputation:
-The Technical University of Munich (TUM) stands consistently as one of Europe’s leading institutions in engineering, natural sciences, and technology.`
-            },
-            rwth: {
-                title: "RWTH Aachen University",
-                content: `Overview & Research Focus:
-Located in the triple-border region of Germany, Belgium, and the Netherlands, RWTH Aachen is Europe's premier technical hub for engineering.`
-            },
-            kit: {
-                title: "Karlsruhe Institute of Technology (KIT)",
-                content: `Overview & Technological Excellence:
-Born from the merger of a traditional university and a national research laboratory, KIT holds a unique position in the German academic landscape.`
-            }
-        };
-
-        function openModal(key) {
-            const data = uniData[key];
-            if (data) {
-                document.getElementById('mTitle').innerText = data.title;
-                document.getElementById('mBody').innerText = data.content;
-                document.getElementById('modalOverlay').style.display = 'flex';
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
         }
     </script>
 </body>
