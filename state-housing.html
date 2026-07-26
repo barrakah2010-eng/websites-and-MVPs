@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Student Housing Cost Breakdown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #f8fafc; --bg-surface: #ffffff; --bg-muted: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569;
+            --brand-primary: #4f46e5; --border-color: #e2e8f0; --radius-lg: 16px; --radius-md: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body { background: var(--bg-canvas); color: var(--text-primary); padding: 32px; line-height: 1.6; }
+
+        .header { margin-bottom: 24px; border-bottom: 2px solid var(--border-color); padding-bottom: 16px; }
+        .state-title { font-size: 28px; font-weight: 800; }
+        .state-tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-top: 6px; }
+
+        .tier-high { background: #fee2e2; color: #991b1b; }
+        .tier-mod { background: #fef9c3; color: #854d0e; }
+        .tier-low { background: #dcfce7; color: #166534; }
+
+        .housing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+        .price-card { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-md); }
+        .price-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; }
+        .price-val { font-size: 20px; font-weight: 800; color: var(--brand-primary); margin-top: 6px; }
+
+        .section { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px; }
+        .section-title { font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+
+        ul { padding-left: 20px; }
+        li { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+
+        .btn-close {
+            display: block; width: 100%; padding: 12px; background: var(--bg-muted);
+            border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="contentArea"></div>
+
+    <script>
+        const housingData = {
+            "Bavaria": { tier: "high", dorm: "€280 – €420 / mo", wg: "€520 – €850 / mo", studio: "€750 – €1,200 / mo", cities: ["Munich", "Erlangen", "Würzburg", "Nuremberg"], note: "Munich is Germany's most expensive rental market. Early application to Studierendenwerk is critical." },
+            "Baden-Württemberg": { tier: "high", dorm: "€270 – €390 / mo", wg: "€420 – €680 / mo", studio: "€650 – €1,050 / mo", cities: ["Karlsruhe", "Stuttgart", "Heidelberg", "Freiburg"], note: "High demand driven by major tech hubs and historic university towns." },
+            "Berlin": { tier: "high", dorm: "€260 – €380 / mo", wg: "€450 – €700 / mo", studio: "€650 – €1,000 / mo", cities: ["Berlin"], note: "Competitive private market. Look into outer districts like Lichtenberg or Köpenick for better rates." },
+            "Hesse": { tier: "high", dorm: "€260 – €370 / mo", wg: "€400 – €650 / mo", studio: "€600 – €950 / mo", cities: ["Darmstadt", "Frankfurt", "Marburg"], note: "Frankfurt and Darmstadt have strong tech industries and higher rental averages." },
+            "North Rhine-Westphalia": { tier: "mod", dorm: "€240 – €350 / mo", wg: "€350 – €550 / mo", studio: "€500 – €850 / mo", cities: ["Aachen", "Cologne", "Bonn", "Dortmund"], note: "Largest student population in Germany with moderate rent options in Aachen and Dortmund." },
+            "Saxony": { tier: "low", dorm: "€200 – €300 / mo", wg: "€250 – €400 / mo", studio: "€380 – €600 / mo", cities: ["Dresden", "Leipzig", "Chemnitz"], note: "Highly affordable living costs with world-class engineering universities." },
+            "Thuringia": { tier: "low", dorm: "€190 – €280 / mo", wg: "€230 – €380 / mo", studio: "€350 – €550 / mo", cities: ["Jena", "Weimar", "Erfurt"], note: "Extremely budget-friendly with excellent public transport networks." }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const state = urlParams.get('state') || "Bavaria";
+            const data = housingData[state] || { tier: "mod", dorm: "€220 – €340 / mo", wg: "€320 – €500 / mo", studio: "€450 – €750 / mo", cities: ["Regional Capital"], note: "Moderate cost of living with standard German student housing options." };
+
+            const tagClass = data.tier === 'high' ? 'tier-high' : (data.tier === 'low' ? 'tier-low' : 'tier-mod');
+            const tagLabel = data.tier === 'high' ? '🔴 High Cost Zone' : (data.tier === 'low' ? '🟢 Affordable Zone' : '🟡 Moderate Zone');
+
+            document.getElementById('contentArea').innerHTML = `
+                <div class="header">
+                    <h1 class="state-title">${state}</h1>
+                    <span class="state-tag ${tagClass}">${tagLabel}</span>
+                </div>
+
+                <div class="housing-grid">
+                    <div class="price-card">
+                        <div class="price-label">Dorm Room (Dormitory)</div>
+                        <div class="price-val">${data.dorm}</div>
+                    </div>
+                    <div class="price-card">
+                        <div class="price-label">WG Room (Shared Flat)</div>
+                        <div class="price-val">${data.wg}</div>
+                    </div>
+                    <div class="price-card">
+                        <div class="price-label">1-Room Studio Apartment</div>
+                        <div class="price-val">${data.studio}</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">📍 Major Student Cities</h2>
+                    <ul>
+                        ${data.cities.map(c => `<li><strong>•</strong> ${c}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">💡 Housing Strategy & Insights</h2>
+                    <p style="color:var(--text-secondary); font-size:14px;">${data.note}</p>
+                </div>
+
+                <button class="btn-close" onclick="window.close()">Close Window</button>
+            `;
+        });
+    </script>
+</body>
+</html>
