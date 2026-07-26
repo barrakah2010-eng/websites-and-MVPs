@@ -139,43 +139,6 @@
 
         .btn-view:hover { background: var(--brand-hover); }
 
-        /* MODAL OVERLAY - Replaces popup window issues */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            z-index: 1000;
-        }
-
-        .modal-card {
-            background: white;
-            border-radius: 20px;
-            padding: 24px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: #f1f5f9;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
         @media (max-width: 768px) {
             body { padding: 12px; }
             .header-card { padding: 18px; }
@@ -207,14 +170,6 @@
         </div>
 
         <div class="uni-grid" id="uniGrid"></div>
-    </div>
-
-    <!-- INLINE MODAL OVERLAY -->
-    <div class="modal-overlay" id="uniModal">
-        <div class="modal-card">
-            <button class="close-modal" onclick="closeModal()">✕</button>
-            <div id="modalBody"></div>
-        </div>
     </div>
 
     <script>
@@ -290,7 +245,8 @@
                         <div class="detail-row"><strong>🌐 Language:</strong> ${u.language}</div>
                         <div class="detail-row"><strong>💶 Tuition/Fee:</strong> ${u.tuition}</div>
                     </div>
-                    <button class="btn-view" onclick="openUniModal('${u.id}')">View Details</button>
+                    <!-- Opens detailed view in a brand new browser tab -->
+                    <a href="visa-details.html?module=uni-${u.id}" target="_blank" class="btn-view">View Details (New Tab) →</a>
                 `;
                 grid.appendChild(card);
             });
@@ -310,42 +266,6 @@
 
             renderUniversities(filtered);
         }
-
-        function openUniModal(id) {
-            const u = universities.find(item => item.id === id);
-            if (!u) return;
-
-            document.getElementById('modalBody').innerHTML = `
-                <h2 style="font-size:20px; font-weight:800; margin-bottom:8px;">${u.name}</h2>
-                <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px;">📍 ${u.location}</p>
-                
-                <div style="background:#f8fafc; padding:14px; border-radius:12px; margin-bottom:12px; border:1px solid var(--border);">
-                    <h4 style="font-size:14px; font-weight:800; margin-bottom:6px;">📅 Application Window Rules</h4>
-                    <p style="font-size:13px; color:var(--text-dark);"><strong>Winter Intake:</strong> ${u.winterWindow}</p>
-                    <p style="font-size:13px; color:var(--text-dark);"><strong>Summer Intake:</strong> ${u.summerWindow}</p>
-                </div>
-
-                <div style="font-size:13px; line-height:1.6; color:var(--text-dark); margin-bottom:16px;">
-                    <strong>Overview & Requirements:</strong><br>
-                    ${u.details}
-                </div>
-
-                <button class="btn-view" onclick="closeModal()">Close</button>
-            `;
-
-            document.getElementById('uniModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('uniModal').style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('uniModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        };
 
         document.addEventListener('DOMContentLoaded', () => {
             renderUniversities(universities);
