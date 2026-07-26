@@ -17,7 +17,6 @@
             --brand-primary: #4f46e5;
             --brand-hover: #4338ca;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
             --radius-lg: 16px;
             --radius-md: 10px;
@@ -150,21 +149,20 @@
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
 
             push(ref(db, 'subscribers'), {
                 username: username,
                 email: email,
                 timestamp: Date.now()
             }).then(() => {
-                // Save user login session locally
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('username', username);
                 localStorage.setItem('userEmail', email);
 
                 statusMsg.style.color = '#10b981';
-                statusMsg.innerText = 'Registration successful! Redirecting...';
+                statusMsg.innerText = 'Login successful! Redirecting...';
                 setTimeout(() => { window.location.href = 'index.html'; }, 1000);
             }).catch((err) => {
                 statusMsg.style.color = '#ef4444';
