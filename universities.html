@@ -13,15 +13,17 @@
             --text-primary: #0f172a; --text-secondary: #475569;
             --brand-primary: #4f46e5; --brand-hover: #4338ca; --border-color: #e2e8f0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
             --radius-lg: 16px; --radius-md: 10px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background: linear-gradient(rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0.88)), 
-                        url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(
+                rgba(248, 250, 252, 0.35), 
+                rgba(248, 250, 252, 0.35)
+            ), url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
             background-size: cover; background-position: center; background-attachment: fixed;
             color: var(--text-primary); min-height: 100vh; padding: 40px 24px;
         }
@@ -31,26 +33,24 @@
         .back-link:hover { text-decoration: underline; }
 
         .header-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
-        .header-subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 36px; }
+        .header-subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 36px; font-weight: 600; }
 
         .uni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
 
         .uni-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
             display: flex;
             flex-direction: column;
             transition: all 0.2s ease;
         }
 
-        .uni-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--brand-primary); }
-
+        .uni-card:hover { transform: translateY(-4px); border-color: var(--brand-primary); }
         .uni-img { width: 100%; height: 180px; object-fit: cover; }
-
         .uni-content { padding: 24px; display: flex; flex-direction: column; flex: 1; }
 
         .uni-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -68,10 +68,9 @@
 
         .btn-detail:hover { background: var(--brand-primary); color: #ffffff; }
 
-        /* Modal / Drawer Overlay */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(6px);
             display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px;
         }
 
@@ -93,42 +92,38 @@
         <p class="header-subtitle">Top-ranked public academic institutions offering tuition-free English programs.</p>
 
         <div class="uni-grid">
-            <!-- TUM -->
             <div class="uni-card">
                 <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80" class="uni-img" alt="TUM Campus">
                 <div class="uni-content">
                     <div class="uni-tags"><span class="tag">0 € Tuition</span><span class="tag-alt">Munich</span></div>
                     <h3 class="uni-name">Technical University of Munich</h3>
                     <p class="uni-excerpt">Germany's premier technical institute excels in computer engineering, AI research, and robotics innovation.</p>
-                    <button class="btn-detail" onclick="openModal('tum')">Read Full Profile (500+ Words) &rarr;</button>
+                    <button class="btn-detail" onclick="openModal('tum')">Read Full Profile &rarr;</button>
                 </div>
             </div>
 
-            <!-- RWTH Aachen -->
             <div class="uni-card">
                 <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80" class="uni-img" alt="RWTH Aachen">
                 <div class="uni-content">
                     <div class="uni-tags"><span class="tag">0 € Tuition</span><span class="tag-alt">Aachen</span></div>
                     <h3 class="uni-name">RWTH Aachen University</h3>
                     <p class="uni-excerpt">Renowned global engineering powerhouse fostering industrial tech research and software systems development.</p>
-                    <button class="btn-detail" onclick="openModal('rwth')">Read Full Profile (500+ Words) &rarr;</button>
+                    <button class="btn-detail" onclick="openModal('rwth')">Read Full Profile &rarr;</button>
                 </div>
             </div>
 
-            <!-- KIT -->
             <div class="uni-card">
                 <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" class="uni-img" alt="KIT Campus">
                 <div class="uni-content">
                     <div class="uni-tags"><span class="tag">0 € Tuition</span><span class="tag-alt">Karlsruhe</span></div>
                     <h3 class="uni-name">Karlsruhe Institute of Tech (KIT)</h3>
                     <p class="uni-excerpt">The Research University in the Helmholtz Association, driving breakthroughs in software architectures and cyber physics.</p>
-                    <button class="btn-detail" onclick="openModal('kit')">Read Full Profile (500+ Words) &rarr;</button>
+                    <button class="btn-detail" onclick="openModal('kit')">Read Full Profile &rarr;</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal View -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-card">
             <button class="modal-close" onclick="closeModal()">&times;</button>
@@ -145,29 +140,17 @@
 The Technical University of Munich (TUM) stands consistently as one of Europe’s leading institutions in engineering, natural sciences, and technology. Renowned globally for cutting-edge research, startup incubators, and exceptional industry partnerships, TUM provides international students with an unprecedented academic environment.
 
 Degree Specializations & Language Requirements:
-TUM offers an expanding roster of Bachelor’s and Master’s programs taught entirely in English, particularly in Computer Science, Data Engineering, Mathematics, and Biomedical Engineering. While degree studies are conducted in English, acquiring basic German (CEFR level A2/B1) is highly encouraged for local integration and industrial internships.
-
-Campus Life & Industry Connections:
-Situated across Munich, Garching, and Freising, TUM state-of-the-art research facilities house world-class supercomputers, robotics hubs, and quantum physics labs. Munich acts as the tech capital of Germany, hosting global headquarters like BMW, Siemens, Allianz, and Google, providing students direct access to high-value working student (Werkstudent) positions and thesis opportunities.`
+TUM offers an expanding roster of Bachelor’s and Master’s programs taught entirely in English, particularly in Computer Science, Data Engineering, Mathematics, and Biomedical Engineering. While degree studies are conducted in English, acquiring basic German (CEFR level A2/B1) is highly encouraged for local integration and industrial internships.`
             },
             rwth: {
                 title: "RWTH Aachen University",
                 content: `Overview & Research Focus:
-Located in the triple-border region of Germany, Belgium, and the Netherlands, RWTH Aachen is Europe's premier technical hub for mechanical, industrial, and electrical engineering. As a member of TU9, the university maintains close ties to multinational industrial research initiatives.
-
-Academic Structure & Admission Metrics:
-RWTH Aachen emphasizes rigorous mathematical foundations and practical engineering application. Program admissions are handled either directly or through uni-assist, evaluating high school transcripts, VPD certificates, and standardized English proficiencies (TOEFL/IELTS).
-
-Cost of Living & Career Prospects:
-While public education at RWTH remains tuition-free (requiring only a nominal semester contribution of roughly €300 including regional transit), living in Aachen is significantly more affordable than in major metropolises like Munich or Frankfurt, making it ideal for international students.`
+Located in the triple-border region of Germany, Belgium, and the Netherlands, RWTH Aachen is Europe's premier technical hub for mechanical, industrial, and electrical engineering. As a member of TU9, the university maintains close ties to multinational industrial research initiatives.`
             },
             kit: {
                 title: "Karlsruhe Institute of Technology (KIT)",
                 content: `Overview & Technological Excellence:
-Born from the merger of a traditional university and a national research laboratory, KIT holds a unique position in the German academic landscape. It is world-famed for its contributions to computer engineering, cyber security, automotive research, and renewable energy grids.
-
-Student Life & Campus Innovation:
-The Karlsruhe campus is closely integrated into the city's green belt. International students benefit from dedicated orientation weeks, STEM mentoring circles, and zero tuition costs for public bachelor/master degrees.`
+Born from the merger of a traditional university and a national research laboratory, KIT holds a unique position in the German academic landscape. It is world-famed for its contributions to computer engineering, cyber security, automotive research, and renewable energy grids.`
             }
         };
 
