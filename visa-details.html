@@ -3,221 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visa & Execution Guide</title>
+    <title>Germany Student Visa - Comprehensive Guide</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-canvas: #f8fafc;
-            --bg-surface: #ffffff;
-            --bg-muted: #f1f5f9;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
+            --bg-page: #cbd5e1;
+            --card-bg: #ffffff;
             --brand-primary: #4f46e5;
-            --border-color: #e2e8f0;
-            --radius-lg: 16px;
-            --radius-md: 10px;
+            --brand-hover: #4338ca;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background: var(--bg-canvas);
-            color: var(--text-primary);
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
             padding: 32px;
-            line-height: 1.6;
-        }
-
-        .header {
-            margin-bottom: 28px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 20px;
-        }
-
-        .title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
-        .subtitle { font-size: 15px; color: var(--text-secondary); font-weight: 600; }
-
-        .section {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
             margin-bottom: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; color: var(--text-primary); }
-
-        ul { padding-left: 20px; }
-        li { margin-bottom: 10px; color: var(--text-secondary); font-weight: 500; font-size: 14px; }
-        strong { color: var(--text-primary); }
-
-        .highlight-box {
-            background: #e0e7ff;
-            border-left: 4px solid var(--brand-primary);
-            padding: 16px;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #3730a3;
-        }
-
-        .btn-close {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: var(--bg-muted);
-            border: none;
-            border-radius: var(--radius-md);
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brand-primary);
+            text-decoration: none;
             font-weight: 700;
-            color: var(--text-primary);
-            cursor: pointer;
-            text-align: center;
-            margin-top: 24px;
+            font-size: 14px;
+            margin-bottom: 20px;
         }
-        .btn-close:hover { background: #e2e8f0; }
+
+        .back-btn:hover { text-decoration: underline; }
+
+        .guide-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .guide-subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .section-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-box h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .step-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .step-num {
+            background: var(--brand-primary);
+            color: white;
+            font-weight: 800;
+            font-size: 12px;
+            min-width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .info-table th, .info-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .info-table th { background: #e0e7ff; color: #3730a3; font-weight: 800; }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .card { padding: 18px; border-radius: 16px; }
+            .guide-title { font-size: 20px; flex-wrap: wrap; }
+            .guide-subtitle { font-size: 13px; margin-bottom: 16px; }
+            .section-box { padding: 14px; }
+            .section-box h3 { font-size: 15px; }
+            .step-item { font-size: 13px; }
+            .info-table th, .info-table td { padding: 8px; font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="contentArea">
-        <p style="text-align: center; font-weight: 700;">Loading detailed guide...</p>
+    <div class="container">
+        <div class="card">
+            <a href="visa.html" class="back-btn">← Back to Overview</a>
+            <div id="contentArea">
+                <!-- Content injected dynamically via JavaScript based on URL query parameter -->
+            </div>
+        </div>
     </div>
 
     <script>
-        const moduleDatabase = {
+        const moduleDetails = {
             "blocked-account": {
-                title: "💰 Blocked Account (Sperrkonto)",
-                subtitle: "Official Financial Proof Requirements for German Student Visa",
-                highlight: "Mandatory Minimum Deposit: 11,904.00 € per year (992.00 € per month).",
+                title: "💰 Blocked Account (Sperrkonto) Guide",
+                subtitle: "Detailed breakdown of financial proof requirements for standard German student visas.",
                 sections: [
                     {
-                        title: "1. Core Requirements & Breakdown",
-                        items: [
-                            "<strong>Annual Deposit Standard:</strong> Federal BAföG rate mandates a minimum of 11,904 € held in a blocked account.",
-                            "<strong>Monthly Release Limit:</strong> Upon arrival in Germany, maximum payout is capped at 992 € per month to cover living expenses.",
-                            "<strong>Buffer Amount:</strong> Most providers require an extra 50 € - 100 € buffer deposit to cover potential bank transfer wire fees."
-                        ]
+                        heading: "Key Statutory Requirements",
+                        content: `
+                            <ul class="step-list">
+                                <li class="step-item"><span class="step-num">1</span><div><strong>Mandatory Amount:</strong> Minimum required standard deposit of €11,904 per year (€992 per month).</div></li>
+                                <li class="step-item"><span class="step-num">2</span><div><strong>Monthly Payout:</strong> Once in Germany, €992 is unfrozen and transferred automatically to your local German bank account each month.</div></li>
+                                <li class="step-item"><span class="step-num">3</span><div><strong>Buffer Deposit:</strong> Most digital providers require a one-time setup fee (~€50–€89) plus a safety buffer (~€100) returned upon closing.</div></li>
+                            </ul>
+                        `
                     },
                     {
-                        title: "2. Approved Digital Providers Comparison",
-                        items: [
-                            "<strong>Expatrio:</strong> ~49 € setup fee + 5 €/month maintenance. Fast digital setup (24-48 hours).",
-                            "<strong>Fintiba:</strong> ~89 € setup fee + 4.90 €/month. BAFin-approved, offers integrated health insurance packages.",
-                            "<strong>Studely:</strong> Popular choice for international students with direct multi-currency transfer options."
-                        ]
-                    },
-                    {
-                        title: "3. Step-by-Step Transfer Procedure",
-                        items: [
-                            "1. Passport verification and account opening via provider app.",
-                            "2. International bank transfer of 11,904 € + setup/buffer fees.",
-                            "3. Receive the official <strong>Sperrvermerk</strong> (Blocking Confirmation Certificate) PDF.",
-                            "4. Submit the Sperrvermerk to the German embassy during your visa interview."
-                        ]
+                        heading: "Approved Sperrkonto Providers Comparison",
+                        content: `
+                            <div class="table-responsive">
+                                <table class="info-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Provider</th>
+                                            <th>Setup Fee</th>
+                                            <th>Monthly Fee</th>
+                                            <th>Features</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Expatrio</strong></td>
+                                            <td>€89</td>
+                                            <td>€5</td>
+                                            <td>Includes free health insurance package & fast digital approval.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Fintiba</strong></td>
+                                            <td>€89</td>
+                                            <td>€4.90</td>
+                                            <td>Mobile app integration, widely accepted by all embassies.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Coracle</strong></td>
+                                            <td>€59</td>
+                                            <td>€0</td>
+                                            <td>No monthly fee model available with bundle options.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        `
                     }
                 ]
             },
             "health-insurance": {
-                title: "🏥 Health Insurance (Krankenversicherung)",
-                subtitle: "Statutory Public vs. Private Travel Insurance Protocols",
-                highlight: "Health insurance is legally mandatory for university enrollment and visa issuance.",
+                title: "🏥 Health Insurance (Krankenversicherung) Guide",
+                subtitle: "Navigating mandatory health insurance requirements for university enrollment and visa issuance.",
                 sections: [
                     {
-                        title: "1. Public Statutory Health Insurance (GVK)",
-                        items: [
-                            "<strong>Standard Providers:</strong> Techniker Krankenkasse (TK), AOK, Barmer, or DAK.",
-                            "<strong>Monthly Student Rate:</strong> Approx. 120.00 € – 130.00 € per month for students under 30 years old.",
-                            "<strong>Coverage:</strong> 100% coverage for doctor visits, hospital stays, emergencies, and basic dental work with zero deductibles."
-                        ]
-                    },
-                    {
-                        title: "2. Incoming / Travel Health Insurance",
-                        items: [
-                            "<strong>Gap Coverage:</strong> Required to cover your travel dates and early days in Germany before officially enrolling.",
-                            "<strong>Embassy Criteria:</strong> Must cover up to 30,000 € in emergency medical care and repatriation."
-                        ]
+                        heading: "Public vs. Private Coverage",
+                        content: `
+                            <ul class="step-list">
+                                <li class="step-item"><span class="step-num">1</span><div><strong>Statutory Public Insurance (Gesetzliche Krankenversicherung):</strong> Mandatory for students under 30 years old enrolled in degree programs. Premium is ~€120–€130/month (TK, AOK, Barmer).</div></li>
+                                <li class="step-item"><span class="step-num">2</span><div><strong>Incoming Travel / Private Insurance:</strong> Required to cover your initial entry period (1–3 months) before official university enrollment begins.</div></li>
+                            </ul>
+                        `
                     }
                 ]
             },
             "embassy-checklist": {
-                title: "📄 Embassy Visa Application & Checklist",
-                subtitle: "National Visa Type D (Student) Submission Protocol",
-                highlight: "Visa Processing Fee: 75.00 € payable at embassy appointment.",
+                title: "📄 Embassy Visa Application Checklist",
+                subtitle: "Step-by-step documentation required for your student visa interview at the embassy.",
                 sections: [
                     {
-                        title: "1. Physical Document Bundle (Originals + 2 Sets of Copies)",
-                        items: [
-                            "<strong>Valid Passport:</strong> Issued within the last 10 years, minimum 3 blank pages.",
-                            "<strong>National Visa Application Forms:</strong> Fully completed and signed.",
-                            "<strong>Admission Letter:</strong> Official university Zulassungsbescheid or Uni-Assist confirmation.",
-                            "<strong>Financial Proof:</strong> Blocked account certificate (Sperrvermerk) showing 11,904 €.",
-                            "<strong>Academic Credentials:</strong> High school diploma, transcripts, and language certificates (IELTS/TOEFL).",
-                            "<strong>Motivation Letter & CV:</strong> Detailed explanation of academic goals and career objectives."
-                        ]
-                    },
-                    {
-                        title: "2. Consular Workflow & Interview",
-                        items: [
-                            "Book appointment early via official <strong>digital.diplo.de</strong> portal.",
-                            "Processing time usually ranges from 4 to 8 weeks.",
-                            "Be prepared to explain your degree choice and post-graduation ambitions clearly during the interview."
-                        ]
+                        heading: "Required Document Stack",
+                        content: `
+                            <ul class="step-list">
+                                <li class="step-item"><span class="step-num">1</span><div><strong>Valid Passport:</strong> At least 2 blank pages, valid for 12+ months.</div></li>
+                                <li class="step-item"><span class="step-num">2</span><div><strong>University Admission Letter (Zulassungsbescheid):</strong> Official acceptance from a recognized German university.</div></li>
+                                <li class="step-item"><span class="step-num">3</span><div><strong>Proof of Funds:</strong> Blocked account confirmation statement (Sperrbescheinigung).</div></li>
+                                <li class="step-item"><span class="step-num">4</span><div><strong>Motivation Letter & CV:</strong> Well-structured explanation of your academic goals in Germany.</div></li>
+                                <li class="step-item"><span class="step-num">5</span><div><strong>Consular Fee:</strong> €75 paid at the embassy during appointment.</div></li>
+                            </ul>
+                        `
                     }
                 ]
             },
             "post-arrival": {
-                title: "🏘️ On-Arrival Administrative Execution",
-                subtitle: "First 30 Days Mandatory Registration Protocol",
-                highlight: "City registration (Anmeldung) MUST be completed within 14 days of arrival.",
+                title: "🏘️ Post-Arrival Execution Guide",
+                subtitle: "Critical bureaucratic steps to complete during your first 14 days in Germany.",
                 sections: [
                     {
-                        title: "1. City Registration (Anmeldung)",
-                        items: [
-                            "Book an appointment at the local <strong>Bürgeramt</strong> immediately upon arrival.",
-                            "Required document: <strong>Wohnungsgeberbestätigung</strong> (Landlord Confirmation Certificate).",
-                            "Receive your <strong>Meldebestätigung</strong> (Registration Certificate) — necessary for bank setup!"
-                        ]
-                    },
-                    {
-                        title: "2. Bank Account Activation & Residence Permit",
-                        items: [
-                            "Open a local German checking account (Girokonto) with N26, Sparkasse, or Deutsche Bank.",
-                            "Link your Girokonto to your blocked account provider to initiate the monthly 992 € payout.",
-                            "Apply for the official <strong>Aufenthaltstitel</strong> (Residence Permit) at the local Ausländerbehörde before your entry visa expires."
-                        ]
+                        heading: "First 14 Days Checklist",
+                        content: `
+                            <ul class="step-list">
+                                <li class="step-item"><span class="step-num">1</span><div><strong>City Registration (Anmeldung):</strong> Register your residential address at the local Resident's Registration Office (Bürgeramt) within 14 days.</div></li>
+                                <li class="step-item"><span class="step-num">2</span><div><strong>Local Bank Account:</strong> Open a current account (Girokonto) with N26, Commerzbank, or Sparkasse to unblock your monthly payout.</div></li>
+                                <li class="step-item"><span class="step-num">3</span><div><strong>Residence Permit (Aufenthaltstitel):</strong> Book an appointment at the Immigration Office (Ausländerbehörde) to convert your national entry visa into a multi-year student residence permit.</div></li>
+                            </ul>
+                        `
                     }
                 ]
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const moduleId = urlParams.get('module') || 'blocked-account';
-            const data = moduleDatabase[moduleId] || moduleDatabase['blocked-account'];
+        function renderContent() {
+            const params = new URLSearchParams(window.location.search);
+            const moduleKey = params.get('module') || 'blocked-account';
+            const data = moduleDetails[moduleKey] || moduleDetails['blocked-account'];
 
-            document.title = `${data.title} — Detailed Guide`;
-
-            document.getElementById('contentArea').innerHTML = `
-                <div class="header">
-                    <h1 class="title">${data.title}</h1>
-                    <div class="subtitle">${data.subtitle}</div>
-                </div>
-
-                <div class="highlight-box">${data.highlight}</div>
-
-                ${data.sections.map(sec => `
-                    <div class="section">
-                        <h2 class="section-title">${sec.title}</h2>
-                        <ul>
-                            ${sec.items.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                `).join('')}
-
-                <button class="btn-close" onclick="window.close()">Close Guide Window</button>
+            let html = `
+                <div class="guide-title">${data.title}</div>
+                <div class="guide-subtitle">${data.subtitle}</div>
             `;
-        });
+
+            data.sections.forEach(sec => {
+                html += `
+                    <div class="section-box">
+                        <h3>${sec.heading}</h3>
+                        ${sec.content}
+                    </div>
+                `;
+            });
+
+            document.getElementById('contentArea').innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', renderContent);
     </script>
 </body>
 </html>
