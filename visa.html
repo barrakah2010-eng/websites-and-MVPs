@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visa & Housing Blueprint — Germany</title>
+    <title>Germany Visa & Housing Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,9 +14,6 @@
             --text-dark: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
-            --map-sea: #e0f2fe;
-            --map-land: #fefae0;
-            --map-border: #94a3b8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -82,99 +79,86 @@
 
         .btn-action:hover { background: var(--brand-hover); }
 
-        /* RIGHT COLUMN: REALISTIC SVG GERMANY MAP WITH HITBOXES */
-        .map-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
-            text-align: center;
+        /* REGION SELECTOR & HOUSING CHART */
+        .select-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .map-header-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-        .map-header-sub { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-bottom: 16px; }
-
-        .svg-container {
-            background: var(--map-sea);
-            border-radius: 16px;
-            padding: 12px;
-            border: 2px solid #cbd5e1;
-            position: relative;
-        }
-
-        svg { width: 100%; height: auto; display: block; }
-
-        /* STATE HITBOX TRIGGER STYLING */
-        .state-hitbox {
-            fill: var(--map-land);
-            stroke: var(--map-border);
-            stroke-width: 1.5;
-            stroke-linejoin: round;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .state-hitbox:hover {
-            fill: #6366f1 !important;
-            stroke: #312e81;
-            stroke-width: 2.5;
-            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.25));
-        }
-
-        /* CITY TRIGGER DOTS */
-        .city-trigger {
-            fill: #ef4444;
-            stroke: #ffffff;
-            stroke-width: 1.5;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .city-trigger:hover {
-            transform: scale(1.8);
-            fill: #dc2626;
-        }
-
-        .map-label {
-            font-size: 11px;
-            font-weight: 800;
-            fill: #334155;
-            pointer-events: none;
-        }
-
-        .water-text {
-            font-size: 12px;
-            font-weight: 800;
-            fill: #0284c7;
-            font-style: italic;
-            letter-spacing: 1px;
-        }
-
-        .neighbor-text {
-            font-size: 13px;
-            font-weight: 800;
-            fill: #94a3b8;
-            letter-spacing: 1.5px;
-        }
-
-        .info-box {
-            margin-top: 16px;
-            background: #f1f5f9;
-            padding: 16px;
+        .region-select {
+            width: 100%;
+            padding: 14px;
             border-radius: 12px;
+            border: 2px solid var(--border);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+            background-color: #f1f5f9;
+            outline: none;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .region-select:focus { border-color: var(--brand-primary); }
+
+        .selected-info {
+            background: #e0e7ff;
             border-left: 4px solid var(--brand-primary);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .selected-info h4 { font-size: 18px; font-weight: 800; color: #3730a3; margin-bottom: 4px; }
+        .selected-info p { font-size: 14px; font-weight: 600; color: #4338ca; }
+
+        /* HOUSING COMPARISON TABLE */
+        .table-title { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+        
+        .housing-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
             text-align: left;
         }
 
-        .info-box h4 { font-size: 16px; font-weight: 800; color: var(--text-dark); }
-        .info-box p { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
+        .housing-table th {
+            background: #f1f5f9;
+            padding: 12px;
+            font-weight: 800;
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .housing-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .housing-table tr:hover { background: #f8fafc; }
+
+        .badge-tier {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .tier-high { background: #fee2e2; color: #991b1b; }
+        .tier-mod { background: #fef9c3; color: #854d0e; }
+        .tier-low { background: #dcfce7; color: #166534; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- LEFT COLUMN: VISA STEPS -->
+        <!-- LEFT COLUMN: 4 CORE VISA MODULES -->
         <div class="left-col">
             <div class="card">
                 <div class="card-title">💰 1. Blocked Account (Sperrkonto)</div>
@@ -201,101 +185,109 @@
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: GERMAN MAP WITH HITBOXES & CITY TRIGGERS -->
+        <!-- RIGHT COLUMN: STATE SELECTOR & COMPARISON TABLE -->
         <div class="right-col">
-            <div class="map-card">
-                <div class="map-header-title">Interactive Housing Map</div>
-                <div class="map-header-sub">Hover or click on any German State (Bundesland) or Red City Trigger</div>
+            <div class="card">
+                <label class="select-label" for="regionSelect">📍 Select Your Target German Region/State:</label>
+                <select id="regionSelect" class="region-select" onchange="updateRegionDetails()">
+                    <option value="Bavaria">Bavaria (Munich, Erlangen, Nuremberg)</option>
+                    <option value="Berlin">Berlin (Capital City State)</option>
+                    <option value="Baden-Württemberg">Baden-Württemberg (Stuttgart, Karlsruhe, Heidelberg)</option>
+                    <option value="Hesse">Hesse (Frankfurt am Main, Darmstadt)</option>
+                    <option value="North Rhine-Westphalia" selected>North Rhine-Westphalia (Aachen, Cologne, Bonn)</option>
+                    <option value="Lower Saxony">Lower Saxony (Hanover, Braunschweig)</option>
+                    <option value="Saxony">Saxony (Dresden, Leipzig, Chemnitz)</option>
+                    <option value="Thuringia">Thuringia (Jena, Weimar)</option>
+                </select>
 
-                <div class="svg-container">
-                    <svg viewBox="0 0 700 820">
-                        <!-- Sea Names -->
-                        <text x="120" y="70" class="water-text">NORTH SEA</text>
-                        <text x="500" y="70" class="water-text">BALTIC SEA</text>
-
-                        <!-- Neighboring Countries -->
-                        <path d="M0 0 L200 0 L180 120 L0 140 Z" fill="#cbd5e1" />
-                        <text x="50" y="60" class="neighbor-text">DENMARK</text>
-
-                        <path d="M0 140 L130 120 L100 360 L0 400 Z" fill="#cbd5e1" />
-                        <text x="10" y="250" class="neighbor-text">NETHERLANDS</text>
-
-                        <path d="M530 140 L700 140 L700 460 L550 440 Z" fill="#cbd5e1" />
-                        <text x="580" y="300" class="neighbor-text">POLAND</text>
-
-                        <path d="M550 440 L700 460 L700 680 L500 660 Z" fill="#cbd5e1" />
-                        <text x="560" y="540" class="neighbor-text">CZECH REP.</text>
-
-                        <path d="M480 660 L700 680 L700 820 L360 820 Z" fill="#cbd5e1" />
-                        <text x="520" y="740" class="neighbor-text">AUSTRIA</text>
-
-                        <!-- GERMAN BUNDESLÄNDER HITBOXES -->
-                        <g id="states">
-                            <!-- Schleswig-Holstein -->
-                            <path class="state-hitbox" d="M200 40 L330 50 L320 140 L220 130 Z" onclick="showInfo('Schleswig-Holstein', 'Kiel', '400€ - 650€')" />
-                            <text x="220" y="90" class="map-label">Schleswig-Holstein</text>
-
-                            <!-- Lower Saxony -->
-                            <path class="state-hitbox" d="M130 170 L340 150 L370 290 L190 330 L110 270 Z" onclick="showInfo('Lower Saxony', 'Hanover', '380€ - 620€')" />
-                            <text x="180" y="230" class="map-label">Lower Saxony</text>
-
-                            <!-- Mecklenburg-Vorpommern -->
-                            <path class="state-hitbox" d="M330 50 L520 70 L500 170 L340 150 Z" onclick="showInfo('Mecklenburg-Vorpommern', 'Schwerin', '320€ - 500€')" />
-                            <text x="360" y="110" class="map-label">Mecklenburg-Vorpommern</text>
-
-                            <!-- North Rhine-Westphalia -->
-                            <path class="state-hitbox" d="M100 320 L210 310 L240 450 L120 440 Z" onclick="showInfo('North Rhine-Westphalia', 'Düsseldorf', '450€ - 850€')" />
-                            <text x="110" y="380" class="map-label">North Rhine-Westphalia</text>
-
-                            <!-- Brandenburg -->
-                            <path class="state-hitbox" d="M370 170 L520 170 L530 340 L390 330 Z" onclick="showInfo('Brandenburg', 'Potsdam', '350€ - 580€')" />
-                            <text x="420" y="240" class="map-label">Brandenburg</text>
-
-                            <!-- Berlin -->
-                            <rect x="440" y="230" width="30" height="25" rx="4" class="state-hitbox" style="fill:#f87171;" onclick="showInfo('Berlin', 'Capital City', '550€ - 950€')" />
-                            <text x="435" y="222" class="map-label" style="fill:#dc2626; font-weight:800;">BERLIN</text>
-
-                            <!-- Hesse -->
-                            <path class="state-hitbox" d="M210 410 L300 390 L310 540 L220 530 Z" onclick="showInfo('Hesse', 'Wiesbaden', '500€ - 900€')" />
-                            <text x="240" y="460" class="map-label">Hesse</text>
-
-                            <!-- Saxony -->
-                            <path class="state-hitbox" d="M390 330 L530 340 L510 440 L380 410 Z" onclick="showInfo('Saxony', 'Dresden', '300€ - 520€')" />
-                            <text x="430" y="370" class="map-label">Saxony</text>
-
-                            <!-- Bavaria -->
-                            <path class="state-hitbox" d="M290 540 L490 510 L470 770 L270 740 Z" onclick="showInfo('Bavaria', 'Munich', '600€ - 1100€')" />
-                            <text x="350" y="640" class="map-label" style="font-size:16px;">Bavaria</text>
-
-                            <!-- Baden-Württemberg -->
-                            <path class="state-hitbox" d="M160 560 L280 550 L260 750 L150 710 Z" onclick="showInfo('Baden-Württemberg', 'Stuttgart', '520€ - 920€')" />
-                            <text x="170" y="630" class="map-label">Baden-Württemberg</text>
-                        </g>
-
-                        <!-- RED CITY TRIGGER POINTS -->
-                        <circle cx="455" cy="242" r="6" class="city-trigger" onclick="showInfo('Berlin City (Trigger)', 'Berlin', '600€ - 1000€')" />
-                        <circle cx="400" cy="710" r="7" class="city-trigger" onclick="showInfo('Munich City (Trigger)', 'Bavaria', '650€ - 1200€')" />
-                        <circle cx="270" cy="140" r="7" class="city-trigger" onclick="showInfo('Hamburg City (Trigger)', 'Hamburg', '500€ - 900€')" />
-                        <circle cx="250" cy="480" r="6" class="city-trigger" onclick="showInfo('Frankfurt City (Trigger)', 'Hesse', '550€ - 950€')" />
-                    </svg>
+                <div class="selected-info" id="selectedBox">
+                    <h4 id="displayState">North Rhine-Westphalia</h4>
+                    <p id="displayPrice">Average Monthly Rent: €350 – €550 / month</p>
+                    <p id="displayNote" style="margin-top: 6px; font-size: 13px;">Popular choice for international students with balanced cost of living.</p>
                 </div>
 
-                <div class="info-box" id="infoBox">
-                    <h4 id="stateTitle">Click any State or Red City Pin</h4>
-                    <p id="statePrice">Average Student Dorm Rent: Select a region</p>
-                </div>
+                <div class="table-title">📊 Regional Rent Comparison Chart</div>
+                <table class="housing-table">
+                    <thead>
+                        <tr>
+                            <th>State / Region</th>
+                            <th>Cost Tier</th>
+                            <th>WG (Shared Flat)</th>
+                            <th>Dorm Room</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bavaria</strong></td>
+                            <td><span class="badge-tier tier-high">High</span></td>
+                            <td>€520 – €850</td>
+                            <td>€280 – €420</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Berlin</strong></td>
+                            <td><span class="badge-tier tier-high">High</span></td>
+                            <td>€450 – €700</td>
+                            <td>€260 – €380</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Baden-Württemberg</strong></td>
+                            <td><span class="badge-tier tier-high">High</span></td>
+                            <td>€420 – €680</td>
+                            <td>€270 – €390</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NRW</strong></td>
+                            <td><span class="badge-tier tier-mod">Moderate</span></td>
+                            <td>€350 – €550</td>
+                            <td>€240 – €350</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lower Saxony</strong></td>
+                            <td><span class="badge-tier tier-mod">Moderate</span></td>
+                            <td>€340 – €520</td>
+                            <td>€230 – €340</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Saxony</strong></td>
+                            <td><span class="badge-tier tier-low">Affordable</span></td>
+                            <td>€250 – €400</td>
+                            <td>€200 – €300</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thuringia</strong></td>
+                            <td><span class="badge-tier tier-low">Affordable</span></td>
+                            <td>€230 – €380</td>
+                            <td>€190 – €280</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
     <script>
-        function openGuide(moduleName) {
-            window.open('visa-details.html?module=' + moduleName, 'GuideWindow', 'width=800,height=700,scrollbars=yes');
+        const regionData = {
+            "Bavaria": { price: "€520 – €850 / month", note: "Munich is Germany's most expensive rental market. Apply for dorms early!" },
+            "Berlin": { price: "€450 – €700 / month", note: "High demand in central districts. Look into outer areas like Lichtenberg." },
+            "Baden-Württemberg": { price: "€420 – €680 / month", note: "High tech concentration (Karlsruhe, Stuttgart) drives moderate-to-high rents." },
+            "Hesse": { price: "€400 – €650 / month", note: "Frankfurt and Darmstadt have strong industrial hubs and moderate living costs." },
+            "North Rhine-Westphalia": { price: "€350 – €550 / month", note: "Most populated state with balanced student housing options in Aachen and Cologne." },
+            "Lower Saxony": { price: "€340 – €520 / month", note: "Moderate living costs with great public transport connectivity." },
+            "Saxony": { price: "€250 – €400 / month", note: "Top-tier technical universities (Dresden/Leipzig) with very affordable rent!" },
+            "Thuringia": { price: "€230 – €380 / month", note: "One of the most budget-friendly states in Germany for university students." }
+        };
+
+        function updateRegionDetails() {
+            const selected = document.getElementById('regionSelect').value;
+            const data = regionData[selected];
+            
+            document.getElementById('displayState').innerText = selected;
+            document.getElementById('displayPrice').innerText = "Average Monthly Rent: " + data.price;
+            document.getElementById('displayNote').innerText = data.note;
         }
 
-        function showInfo(stateName, capital, price) {
-            document.getElementById('stateTitle').innerText = stateName + " (" + capital + ")";
-            document.getElementById('statePrice').innerText = "Average Monthly Student Rent: " + price;
+        function openGuide(moduleName) {
+            window.open('visa-details.html?module=' + moduleName, 'GuideWindow', 'width=800,height=700,scrollbars=yes');
         }
     </script>
 </body>
