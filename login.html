@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Access — Guide to Germany</title>
+    <title>Member Portal Login — Guide to Germany</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,8 @@
             --brand-primary: #4f46e5;
             --brand-hover: #4338ca;
             --border-color: #e2e8f0;
-            --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
             --radius-lg: 16px;
             --radius-md: 10px;
         }
@@ -25,98 +26,63 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background-color: var(--bg-canvas);
+            /* Same subtle background overlay used on index, universities, and visa pages */
+            background: linear-gradient(
+                rgba(248, 250, 252, 0.88), 
+                rgba(248, 250, 252, 0.88)
+            ), url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 24px;
         }
 
-        .auth-container {
-            width: 100%;
-            max-width: 440px;
-            background: var(--bg-surface);
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 40px 32px;
-            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow-md);
         }
 
-        .auth-header {
-            text-align: center;
-            margin-bottom: 28px;
-        }
-
-        .brand-logo {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #4f46e5, #0284c7);
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 20px;
-            border-radius: 12px;
-            margin-bottom: 16px;
-        }
-
-        .auth-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
-        .auth-subtitle { font-size: 14px; color: var(--text-secondary); }
-
-        .auth-tabs {
-            display: flex;
-            background: var(--bg-muted);
-            padding: 4px;
-            border-radius: var(--radius-md);
+        .back-link {
+            color: var(--brand-primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline-block;
             margin-bottom: 24px;
         }
 
-        .tab-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn.active {
-            background: var(--bg-surface);
-            color: var(--text-primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-        }
+        .login-header { margin-bottom: 24px; }
+        .login-header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+        .login-header p { font-size: 14px; color: var(--text-secondary); }
 
         .form-group { margin-bottom: 18px; }
-        .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
-        
-        .form-input {
+        .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-primary); }
+        .form-group input {
             width: 100%;
             padding: 12px 14px;
-            background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             font-size: 14px;
-            color: var(--text-primary);
             outline: none;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s ease;
         }
-
-        .form-input:focus {
-            border-color: var(--brand-primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-        }
+        .form-group input:focus { border-color: var(--brand-primary); }
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: var(--brand-primary);
             color: #ffffff;
             border: none;
@@ -125,65 +91,46 @@
             font-weight: 700;
             cursor: pointer;
             transition: background 0.2s ease;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .btn-submit:hover { background: var(--brand-hover); }
 
-        .back-home {
-            text-align: center;
-            margin-top: 24px;
-        }
-
-        .back-home a {
-            color: var(--text-secondary);
-            text-decoration: none;
+        .status-msg {
+            margin-top: 16px;
             font-size: 13px;
+            text-align: center;
             font-weight: 600;
         }
-
-        .back-home a:hover { color: var(--brand-primary); }
     </style>
 </head>
 <body>
 
-    <div class="auth-container">
-        <div class="auth-header">
-            <div class="brand-logo">G</div>
-            <h1 class="auth-title">Welcome Portal</h1>
-            <p class="auth-subtitle">Sign in to access your German relocation workspace</p>
+    <div class="login-card">
+        <a href="index.html" class="back-link">&larr; Return to Dashboard</a>
+        <div class="login-header">
+            <h1>Member Access</h1>
+            <p>Log in to access your saved university listings and relocation documents.</p>
         </div>
 
-        <div class="auth-tabs">
-            <button type="button" class="tab-btn active" id="tabSignIn">Sign In</button>
-            <button type="button" class="tab-btn" id="tabSignUp">Register</button>
-        </div>
-
-        <form id="authForm">
-            <div class="form-group" id="usernameGroup" style="display: none;">
-                <label class="form-label" for="usernameInput">Full Name</label>
-                <input type="text" id="usernameInput" class="form-control form-input" placeholder="e.g. Koussay Boubakri">
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
             </div>
             <div class="form-group">
-                <label class="form-label" for="emailInput">Email Address</label>
-                <input type="email" id="emailInput" class="form-control form-input" placeholder="name@domain.com" required>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="name@example.com" required>
             </div>
-            <div class="form-group">
-                <label class="form-label" for="passwordInput">Password</label>
-                <input type="password" id="passwordInput" class="form-control form-input" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="btn-submit" id="submitBtn">Sign In</button>
+            <button type="submit" class="btn-submit">Sign In</button>
         </form>
 
-        <div class="back-home">
-            <a href="index.html">&larr; Return to Main Platform</a>
-        </div>
+        <div class="status-msg" id="statusMsg"></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAyZFvDYKw1wikerlF_HX_q_gQdXoPvhyI",
@@ -196,57 +143,29 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getDatabase(app);
 
-        let mode = 'signin';
-        const tabSignIn = document.getElementById('tabSignIn');
-        const tabSignUp = document.getElementById('tabSignUp');
-        const usernameGroup = document.getElementById('usernameGroup');
-        const usernameInput = document.getElementById('usernameInput');
-        const submitBtn = document.getElementById('submitBtn');
+        const form = document.getElementById('loginForm');
+        const statusMsg = document.getElementById('statusMsg');
 
-        tabSignIn.onclick = () => {
-            mode = 'signin';
-            tabSignIn.classList.add('active');
-            tabSignUp.classList.remove('active');
-            usernameGroup.style.display = 'none';
-            usernameInput.removeAttribute('required');
-            submitBtn.innerText = 'Sign In';
-        };
-
-        tabSignUp.onclick = () => {
-            mode = 'signup';
-            tabSignUp.classList.add('active');
-            tabSignIn.classList.remove('active');
-            usernameGroup.style.display = 'block';
-            usernameInput.setAttribute('required', 'true');
-            submitBtn.innerText = 'Create Account & Subscribe';
-        };
-
-        document.getElementById('authForm').onsubmit = async (e) => {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = document.getElementById('emailInput').value.trim();
-            const password = document.getElementById('passwordInput').value.trim();
-            const username = usernameInput.value.trim();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
 
-            try {
-                if (mode === 'signup') {
-                    const cred = await createUserWithEmailAndPassword(auth, email, password);
-                    await set(ref(db, 'subscribers/' + cred.user.uid), {
-                        username: username || email.split('@')[0],
-                        email: email,
-                        joinedAt: new Date().toISOString()
-                    });
-                    alert("Account registered successfully!");
-                } else {
-                    await signInWithEmailAndPassword(auth, email, password);
-                }
-                window.location.href = 'index.html';
-            } catch (err) {
-                alert("Auth Error: " + err.message);
-            }
-        };
+            push(ref(db, 'subscribers'), {
+                username: username,
+                email: email,
+                timestamp: Date.now()
+            }).then(() => {
+                statusMsg.style.color = '#10b981';
+                statusMsg.innerText = 'Login successful! Redirecting...';
+                setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+            }).catch((err) => {
+                statusMsg.style.color = '#ef4444';
+                statusMsg.innerText = 'Error: ' + err.message;
+            });
+        });
     </script>
 </body>
 </html>
