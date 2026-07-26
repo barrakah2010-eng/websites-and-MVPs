@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Access — Guide to Germany</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-muted: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --brand-primary: #4f46e5;
+            --brand-hover: #4338ca;
+            --border-color: #e2e8f0;
+            --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #4f46e5, #0284c7);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .auth-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+        .auth-subtitle { font-size: 14px; color: var(--text-secondary); }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-muted);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--brand-primary);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover { background: var(--brand-hover); }
+
+        .back-home {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .back-home a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-home a:hover { color: var(--brand-primary); }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="brand-logo">G</div>
+            <h1 class="auth-title">Welcome Portal</h1>
+            <p class="auth-subtitle">Sign in to access your German relocation workspace</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button type="button" class="tab-btn active" id="tabSignIn">Sign In</button>
+            <button type="button" class="tab-btn" id="tabSignUp">Register</button>
+        </div>
+
+        <form id="authForm">
+            <div class="form-group" id="usernameGroup" style="display: none;">
+                <label class="form-label" for="usernameInput">Full Name</label>
+                <input type="text" id="usernameInput" class="form-control form-input" placeholder="e.g. Koussay Boubakri">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="emailInput">Email Address</label>
+                <input type="email" id="emailInput" class="form-control form-input" placeholder="name@domain.com" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="passwordInput">Password</label>
+                <input type="password" id="passwordInput" class="form-control form-input" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">Sign In</button>
+        </form>
+
+        <div class="back-home">
+            <a href="index.html">&larr; Return to Main Platform</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyZFvDYKw1wikerlF_HX_q_gQdXoPvhyI",
+            authDomain: "your-guide-to-germany.firebaseapp.com",
+            databaseURL: "https://your-guide-to-germany-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "your-guide-to-germany",
+            storageBucket: "your-guide-to-germany.firebasestorage.app",
+            messagingSenderId: "1029641813508",
+            appId: "1:1029641813508:web:32c3a975f76bee69437f51"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let mode = 'signin';
+        const tabSignIn = document.getElementById('tabSignIn');
+        const tabSignUp = document.getElementById('tabSignUp');
+        const usernameGroup = document.getElementById('usernameGroup');
+        const usernameInput = document.getElementById('usernameInput');
+        const submitBtn = document.getElementById('submitBtn');
+
+        tabSignIn.onclick = () => {
+            mode = 'signin';
+            tabSignIn.classList.add('active');
+            tabSignUp.classList.remove('active');
+            usernameGroup.style.display = 'none';
+            usernameInput.removeAttribute('required');
+            submitBtn.innerText = 'Sign In';
+        };
+
+        tabSignUp.onclick = () => {
+            mode = 'signup';
+            tabSignUp.classList.add('active');
+            tabSignIn.classList.remove('active');
+            usernameGroup.style.display = 'block';
+            usernameInput.setAttribute('required', 'true');
+            submitBtn.innerText = 'Create Account & Subscribe';
+        };
+
+        document.getElementById('authForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
+            const username = usernameInput.value.trim();
+
+            try {
+                if (mode === 'signup') {
+                    const cred = await createUserWithEmailAndPassword(auth, email, password);
+                    await set(ref(db, 'subscribers/' + cred.user.uid), {
+                        username: username || email.split('@')[0],
+                        email: email,
+                        joinedAt: new Date().toISOString()
+                    });
+                    alert("Account registered successfully!");
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+                window.location.href = 'index.html';
+            } catch (err) {
+                alert("Auth Error: " + err.message);
+            }
+        };
+    </script>
+</body>
+</html>
